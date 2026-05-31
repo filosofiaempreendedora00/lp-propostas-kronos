@@ -230,14 +230,15 @@ em { font-style: italic; }
   gap: 1.5rem;
   padding-block: 1.1rem;
 }
-.brand { display: inline-flex; align-items: center; gap: 0.6rem; color: var(--creme); }
-.brand-mark { color: var(--areia); display: inline-flex; }
-.brand-name {
-  font-family: var(--serif);
-  font-weight: 600;
-  font-size: 1.5rem;
-  letter-spacing: 0.2em;
+.brand { display: inline-flex; align-items: center; color: var(--creme); }
+.brand-logo {
+  height: 30px;
+  width: auto;
+  display: block;
+  transition: opacity 0.3s var(--ease);
 }
+.brand:hover .brand-logo { opacity: 0.82; }
+.brand-footer .brand-logo { height: 38px; }
 .header-nav {
   margin-left: auto;
   display: flex;
