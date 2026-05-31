@@ -541,6 +541,62 @@ em { font-style: italic; }
 }
 
 /* ============================================================
+   PROVA SOCIAL — depoimentos (faixa creme)
+   ============================================================ */
+.section-proof .section-head { text-align: center; }
+.section-proof .hand-divider { margin-inline: auto; background: rgba(46,32,23,0.25); }
+.section-proof .hand-divider::before { background: var(--sepia); }
+.proof-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: clamp(1.25rem, 2.5vw, 2rem);
+  align-items: stretch;
+  position: relative;
+  z-index: 2;
+}
+.proof-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 1.7rem;
+  padding: 2.3rem 2.1rem;
+  border: 1px solid rgba(46, 32, 23, 0.12);
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.5);
+  box-shadow: 0 20px 50px -34px rgba(46, 32, 23, 0.45);
+  transition: transform 0.5s var(--ease-out), box-shadow 0.5s var(--ease);
+}
+.proof-card:hover { transform: translateY(-5px); box-shadow: 0 28px 60px -34px rgba(46, 32, 23, 0.5); }
+.proof-card blockquote {
+  margin: 0;
+  position: relative;
+  padding-top: 1.6rem;
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: clamp(1.2rem, 1.7vw, 1.4rem);
+  line-height: 1.42;
+  color: var(--sepia);
+}
+.proof-card blockquote::before {
+  content: "\201C";
+  position: absolute;
+  top: -0.35em; left: -0.05em;
+  font-family: var(--serif);
+  font-size: 3.2rem;
+  line-height: 1;
+  color: var(--areia);
+}
+.proof-card figcaption {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  padding-top: 1.2rem;
+  border-top: 1px solid rgba(168, 144, 112, 0.35);
+}
+.proof-name { font-weight: 500; color: var(--onix); }
+.proof-role { font-size: 0.88rem; color: var(--areia); }
+
+/* ============================================================
    6. PLANOS
    ============================================================ */
 .billing-toggle {
@@ -811,6 +867,7 @@ em { font-style: italic; }
   .plan-featured:hover { transform: translateY(-6px); }
   .kglyph { opacity: 0.05; width: clamp(120px, 34vw, 220px); }
   .facets { grid-template-columns: repeat(2, 1fr); }
+  .proof-grid { grid-template-columns: 1fr; max-width: 540px; margin-inline: auto; }
 }
 @media (max-width: 560px) {
   body { font-size: 16px; }
