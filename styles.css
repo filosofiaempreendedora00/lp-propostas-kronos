@@ -318,37 +318,31 @@ em { font-style: italic; }
 }
 
 .hero-anchor {
-  margin-top: 3.2rem;
+  margin-top: 3rem;
   display: inline-flex;
   align-items: center;
-  gap: 1.4rem;
-  padding: 1.2rem 2rem 1.2rem 1.4rem;
-  border: 1px solid var(--areia-20);
-  border-radius: 5px;
-  background: rgba(46, 32, 23, 0.45);
-  backdrop-filter: blur(6px);
-  -webkit-backdrop-filter: blur(6px);
-  box-shadow: var(--shadow-soft);
+  gap: 1.3rem;
 }
-.anchor-clock { color: var(--areia); }
-.hand-second { transform-origin: 60px 60px; animation: sweep 60s steps(60, end) infinite; }
-@keyframes sweep { to { transform: rotate(360deg); } }
-.anchor-text { display: flex; flex-direction: column; }
 .anchor-number {
   font-family: var(--serif);
   font-weight: 600;
-  font-size: clamp(3rem, 7vw, 4.6rem);
-  line-height: 0.95;
+  font-size: clamp(3.2rem, 7vw, 5rem);
+  line-height: 0.88;
   color: var(--creme);
   font-variant-numeric: tabular-nums;
 }
 .anchor-unit { color: var(--areia); font-style: italic; }
+.anchor-divider {
+  width: 1px;
+  height: clamp(40px, 6vw, 54px);
+  background: var(--areia-30);
+}
 .anchor-label {
   font-size: 0.82rem;
   letter-spacing: 0.16em;
   text-transform: uppercase;
   color: var(--areia);
-  margin-top: 0.4rem;
+  line-height: 1.55;
 }
 .hero-actions { margin-top: 3rem; }
 
@@ -673,7 +667,6 @@ em { font-style: italic; }
 .section-sand { background: var(--areia); color: var(--onix); text-align: center; overflow: hidden; }
 .section-sand .kglyph { background-color: var(--sepia); opacity: 0.14; }
 .guarantee-inner { max-width: 660px; margin-inline: auto; position: relative; z-index: 2; }
-.guarantee-clock { color: var(--sepia); display: inline-flex; margin-bottom: 1.7rem; opacity: 0.85; }
 .guarantee-title { font-size: clamp(1.9rem, 3.8vw, 2.9rem); color: var(--onix); }
 .guarantee-text { margin-top: 1.3rem; font-size: 1.18rem; color: var(--sepia); font-weight: 300; }
 
