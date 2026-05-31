@@ -124,11 +124,18 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
   transform: translate(-50%, -50%);
   width: 46vw; max-width: 640px;
 }
+/* Símbolo nítido no olho do ciclone (capa) */
 .hero-glyph {
-  left: 50%; top: 48%;
+  left: var(--eye-x, 64%); top: 50%;
   transform: translate(-50%, -50%);
-  width: 30vw; max-width: 400px;
-  opacity: 0.14;
+  width: clamp(60px, 7.5vw, 98px);
+  max-width: none;
+  color: var(--creme);
+  opacity: 0.96;
+  z-index: 2;
+  filter:
+    drop-shadow(0 0 16px rgba(245, 239, 230, 0.32))
+    drop-shadow(0 0 46px rgba(168, 144, 112, 0.5));
 }
 
 /* ---------- Tipografia utilitária ---------- */
@@ -302,9 +309,10 @@ em { font-style: italic; }
 .vortex { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
 .hero-veil {
   position: absolute; inset: 0;
+  /* escurece o lado do texto (esquerda) e preserva o ciclone à direita */
   background:
-    radial-gradient(120% 90% at 50% 42%, transparent 30%, rgba(21,12,6,0.55) 78%, var(--onix) 100%),
-    linear-gradient(to bottom, rgba(21,12,6,0.30), transparent 30%, transparent 70%, rgba(21,12,6,0.55));
+    linear-gradient(100deg, rgba(21,12,6,0.86) 0%, rgba(21,12,6,0.5) 34%, rgba(21,12,6,0) 58%),
+    linear-gradient(to bottom, rgba(21,12,6,0.45), transparent 22%, transparent 72%, rgba(21,12,6,0.6));
   z-index: 1;
 }
 .hero-inner { position: relative; z-index: 3; max-width: 940px; }
@@ -797,6 +805,12 @@ em { font-style: italic; }
    RESPONSIVO
    ============================================================ */
 @media (max-width: 940px) {
+  :root { --eye-x: 50%; }
+  .hero-veil {
+    background:
+      radial-gradient(120% 80% at 50% 46%, transparent 32%, rgba(21,12,6,0.5) 78%, var(--onix) 100%),
+      linear-gradient(to bottom, rgba(21,12,6,0.45), transparent 26%, transparent 70%, rgba(21,12,6,0.6));
+  }
   .pain-grid { grid-template-columns: 1fr; }
   .steps { grid-template-columns: repeat(2, 1fr); }
   .steps::before { display: none; }

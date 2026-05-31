@@ -18,50 +18,98 @@
   };
 
   /* ============================================================
-     1. VÓRTICE — anéis concêntricos de areia girando,
-        com "olho" central escuro de continuidade infinita.
-        Render por camadas pré-rasterizadas + rotação (60fps).
+     1. VÓRTICE / CICLONE — espiral contínua de grãos de areia,
+        inspirada na identidade KRONOS
+        (ref: Ativos Kronos/ref de tornado.jpg).
+        Espiral pré-rasterizada que gira lentamente + brilho
+        quente no centro + poeira estelar de fundo (60fps).
      ============================================================ */
   function Vortex(canvas) {
     var ctx = canvas.getContext("2d", { alpha: true });
     var dpr = Math.min(window.devicePixelRatio || 1, 1.75);
     var w = 0, h = 0, cx = 0, cy = 0, maxR = 0;
-    var layers = [];
-    var raf = null, running = false;
+    var spiral = null, stars = null;
+    var angle = 0, raf = null, running = false;
+    var SPEED = 0.00045; // rotação lenta (rad/frame)
 
-    // Pré-rasteriza uma camada de anéis pontilhados num canvas próprio
-    function makeLayer(size, rInner, rOuter, gap, dot, alpha) {
+    function cxRatio() {
+      var b = parseFloat(canvas.getAttribute("data-cx"));
+      if (isNaN(b)) b = 0.5;
+      return window.innerWidth <= 940 ? 0.5 : b;   // centraliza no mobile
+    }
+    function cyRatio() {
+      var b = parseFloat(canvas.getAttribute("data-cy"));
+      return isNaN(b) ? 0.5 : b;
+    }
+    function rnd() { return Math.random(); }
+    function gauss() { return (rnd() + rnd() + rnd() - 1.5) / 1.5; } // ~normal
+
+    // Pré-rasteriza a espiral de grãos num canvas próprio (alta resolução)
+    function buildSpiral() {
+      maxR = Math.hypot(w, h) * 0.66;
+      var css = maxR * 2;
+      var dev = Math.ceil(css * dpr);
       var c = document.createElement("canvas");
-      c.width = c.height = size;
+      c.width = c.height = dev;
       var x = c.getContext("2d");
-      var cc = size / 2;
-      x.fillStyle = COLOR.areia;
-      for (var r = rInner; r <= rOuter; r += gap) {
-        var circ = 2 * Math.PI * r;
-        var n = Math.max(10, Math.floor(circ / (dot * 3.4)));
-        // leve fade dos anéis conforme se afastam do meio da banda
-        var mid = (rInner + rOuter) / 2;
-        var fade = 1 - Math.min(1, Math.abs(r - mid) / (rOuter - rInner));
-        x.globalAlpha = alpha * (0.45 + 0.55 * fade);
-        for (var i = 0; i < n; i++) {
-          var a = (i / n) * Math.PI * 2;
-          x.beginPath();
-          x.arc(cc + Math.cos(a) * r, cc + Math.sin(a) * r, dot, 0, Math.PI * 2);
-          x.fill();
-        }
+      x.setTransform(dpr, 0, 0, dpr, 0, 0);
+      var cc = maxR; // centro em px-CSS
+
+      var TURNS = 7;
+      var thetaMin = Math.PI * 0.6;
+      var thetaMax = TURNS * Math.PI * 2;
+      var coil = maxR / thetaMax;             // raio por radiano
+      var spacing = coil * Math.PI * 2;        // distância entre voltas
+      var ARMS = 1;                            // braço único contínuo (como a referência)
+      var COUNT = Math.min(24000, Math.floor(maxR * maxR / 40));
+
+      for (var i = 0; i < COUNT; i++) {
+        var arm = i % ARMS;
+        // sqrt(): densidade linear uniforme ao longo do braço (mais grãos por fora,
+        // onde a circunferência é maior) — o coil fica nítido de ponta a ponta
+        var u = Math.sqrt(rnd());
+        var theta = thetaMin + u * (thetaMax - thetaMin);
+        var baseR = coil * theta;
+        // dispersão perpendicular pequena — mantém a volta definida como linha
+        var spread = spacing * (0.07 + 0.13 * (baseR / maxR));
+        var r = baseR + gauss() * spread;
+        var ang = theta + arm * (Math.PI * 2 / ARMS) + (rnd() - 0.5) * 0.04;
+        var px = cc + Math.cos(ang) * r;
+        var py = cc + Math.sin(ang) * r;
+
+        var t = r / maxR;
+        if (t > 1) continue;
+        var edge = t > 0.70 ? Math.max(0, 1 - (t - 0.70) / 0.30) : 1; // desbota nas bordas
+        var inner = 0.5 + 0.5 * (1 - t);                              // mais quente no centro
+        var a = (0.16 + rnd() * 0.52) * inner * edge;
+        if (a <= 0.012) continue;
+
+        var pick = rnd();
+        x.fillStyle = pick > 0.90 ? COLOR.creme : (pick < 0.07 ? COLOR.sepia : COLOR.areia);
+        x.globalAlpha = a;
+        var s = rnd() < 0.86 ? (0.45 + rnd() * 0.7) : (1.1 + rnd() * 0.95);
+        x.beginPath();
+        x.arc(px, py, s, 0, Math.PI * 2);
+        x.fill();
       }
-      return c;
+      spiral = c;
     }
 
-    function build() {
-      maxR = Math.hypot(w, h) * 0.62;
-      var size = Math.ceil(maxR * 2);
-      layers = [
-        // { canvas, angle, speed (rad/frame) }  — interno gira mais rápido
-        { canvas: makeLayer(size, maxR * 0.10, maxR * 0.34, 9,  1.1, 0.9),  angle: 0, speed: 0.00125 },
-        { canvas: makeLayer(size, maxR * 0.34, maxR * 0.62, 13, 1.3, 0.7),  angle: 0, speed: 0.00080 },
-        { canvas: makeLayer(size, maxR * 0.62, maxR * 0.98, 18, 1.5, 0.5),  angle: 0, speed: 0.00050 }
-      ];
+    // Poeira estelar de fundo (não gira — leitura de "céu")
+    function buildStars() {
+      var c = document.createElement("canvas");
+      c.width = Math.floor(w * dpr); c.height = Math.floor(h * dpr);
+      var x = c.getContext("2d");
+      x.setTransform(dpr, 0, 0, dpr, 0, 0);
+      var n = Math.floor(w * h / 12000);
+      for (var i = 0; i < n; i++) {
+        x.globalAlpha = 0.05 + rnd() * 0.28;
+        x.fillStyle = rnd() > 0.85 ? COLOR.creme : COLOR.areia;
+        x.beginPath();
+        x.arc(rnd() * w, rnd() * h, rnd() < 0.9 ? 0.6 : 1.1, 0, Math.PI * 2);
+        x.fill();
+      }
+      stars = c;
     }
 
     function resize() {
@@ -69,44 +117,50 @@
       if (!w || !h) return;
       canvas.width = Math.floor(w * dpr);
       canvas.height = Math.floor(h * dpr);
-      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-      cx = w / 2; cy = h / 2;
-      build();
+      cx = w * cxRatio(); cy = h * cyRatio();
+      buildSpiral();
+      buildStars();
       if (REDUCED) draw(); // quadro único, estático
     }
 
     function draw() {
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
       ctx.clearRect(0, 0, w, h);
-      ctx.globalCompositeOperation = "lighter";
-      for (var i = 0; i < layers.length; i++) {
-        var L = layers[i];
-        ctx.save();
-        ctx.translate(cx, cy);
-        ctx.rotate(L.angle);
-        ctx.globalAlpha = 1;
-        ctx.drawImage(L.canvas, -L.canvas.width / 2, -L.canvas.height / 2);
-        ctx.restore();
-      }
-      ctx.globalCompositeOperation = "source-over";
 
-      // Olho central escuro + vinheta de borda (funde no ônix)
-      var g = ctx.createRadialGradient(cx, cy, maxR * 0.04, cx, cy, maxR);
-      g.addColorStop(0.00, COLOR.onix);
-      g.addColorStop(0.16, "rgba(21,12,6,0.92)");
-      g.addColorStop(0.30, "rgba(21,12,6,0.30)");
-      g.addColorStop(0.62, "rgba(21,12,6,0)");
-      g.addColorStop(0.86, "rgba(21,12,6,0.6)");
-      g.addColorStop(1.00, COLOR.onix);
-      ctx.fillStyle = g;
+      // base ônix
+      ctx.fillStyle = COLOR.onix;
+      ctx.fillRect(0, 0, w, h);
+
+      // brilho quente central + estrelas + espiral (aditivo)
+      ctx.globalCompositeOperation = "lighter";
+      var glow = ctx.createRadialGradient(cx, cy, 0, cx, cy, maxR * 0.62);
+      glow.addColorStop(0.00, "rgba(168,144,112,0.34)");
+      glow.addColorStop(0.10, "rgba(168,144,112,0.20)");
+      glow.addColorStop(0.32, "rgba(120,86,54,0.10)");
+      glow.addColorStop(0.70, "rgba(120,86,54,0.0)");
+      ctx.fillStyle = glow;
+      ctx.fillRect(0, 0, w, h);
+
+      ctx.globalAlpha = 1;
+      ctx.drawImage(stars, 0, 0, w, h);
+
+      ctx.save();
+      ctx.translate(cx, cy);
+      ctx.rotate(angle);
+      ctx.drawImage(spiral, -maxR, -maxR, maxR * 2, maxR * 2);
+      ctx.restore();
+
+      // vinheta — funde no ônix nas bordas (preserva o centro luminoso)
+      ctx.globalCompositeOperation = "source-over";
+      var vig = ctx.createRadialGradient(cx, cy, maxR * 0.34, cx, cy, maxR * 0.96);
+      vig.addColorStop(0.0, "rgba(21,12,6,0)");
+      vig.addColorStop(0.7, "rgba(21,12,6,0.45)");
+      vig.addColorStop(1.0, "rgba(21,12,6,0.9)");
+      ctx.fillStyle = vig;
       ctx.fillRect(0, 0, w, h);
     }
 
-    function frame() {
-      for (var i = 0; i < layers.length; i++) layers[i].angle += layers[i].speed;
-      draw();
-      raf = requestAnimationFrame(frame);
-    }
-
+    function frame() { angle += SPEED; draw(); raf = requestAnimationFrame(frame); }
     function start() { if (running || REDUCED) return; running = true; frame(); }
     function stop() { running = false; if (raf) cancelAnimationFrame(raf); raf = null; }
 
