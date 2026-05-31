@@ -112,14 +112,19 @@
       stars = c;
     }
 
+    var lastW = -1, lastH = -1;
     function resize() {
-      w = canvas.clientWidth; h = canvas.clientHeight;
-      if (!w || !h) return;
+      var nw = canvas.clientWidth, nh = canvas.clientHeight;
+      if (!nw || !nh) return;
+      // No mobile, a barra de endereço muda só a ALTURA. Nesses casos não
+      // reconstruímos a espiral (caro) — evita o engasgo durante o scroll.
+      var minorChange = spiral && nw === lastW && Math.abs(nh - lastH) < 160;
+      w = nw; h = nh;
       canvas.width = Math.floor(w * dpr);
       canvas.height = Math.floor(h * dpr);
       cx = w * cxRatio(); cy = h * cyRatio();
-      buildSpiral();
-      buildStars();
+      if (!minorChange) { buildSpiral(); buildStars(); }
+      lastW = nw; lastH = nh;
       if (REDUCED) draw(); // quadro único, estático
     }
 
@@ -303,6 +308,10 @@
      ============================================================ */
   function initParallax() {
     if (REDUCED) return;
+    // Desliga no mobile/touch: o show/hide da barra de endereço faz o
+    // parallax oscilar (travar pra frente e pra trás) durante o scroll.
+    if (window.matchMedia("(max-width: 940px)").matches ||
+        window.matchMedia("(pointer: coarse)").matches) return;
     var layers = Array.prototype.slice.call(document.querySelectorAll("[data-parallax]"));
     if (!layers.length) return;
     var active = [];
