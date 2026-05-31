@@ -208,6 +208,17 @@ em { font-style: italic; }
   background: var(--areia-14);
   transform: translateY(-2px);
 }
+/* botão escuro — para fundos claros (faixa areia/creme) */
+.btn-onix {
+  background: var(--onix);
+  color: var(--creme);
+}
+.btn-onix:hover {
+  background: var(--sepia);
+  color: var(--creme);
+  transform: translateY(-3px);
+  box-shadow: 0 22px 50px -28px rgba(21, 12, 6, 0.7);
+}
 .btn-lg { padding: 1.15rem 2.4rem; font-size: 1.05rem; }
 .btn-sm { padding: 0.6rem 1.15rem; font-size: 0.88rem; }
 .btn-block { width: 100%; }
@@ -738,9 +749,15 @@ em { font-style: italic; }
    ============================================================ */
 .section-sand { background: var(--areia); color: var(--onix); text-align: center; overflow: hidden; }
 .section-sand .kglyph { background-color: var(--sepia); opacity: 0.14; }
-.guarantee-inner { max-width: 660px; margin-inline: auto; position: relative; z-index: 2; }
-.guarantee-title { font-size: clamp(1.9rem, 3.8vw, 2.9rem); color: var(--onix); }
+.guarantee-inner { max-width: 760px; margin-inline: auto; position: relative; z-index: 2; }
+.guarantee-title {
+  font-size: clamp(1.8rem, 3.4vw, 2.6rem);
+  line-height: 1.12;
+  color: var(--onix);
+  text-wrap: balance;
+}
 .guarantee-text { margin-top: 1.3rem; font-size: 1.18rem; color: var(--sepia); font-weight: 300; }
+.guarantee-cta { margin-top: 2.2rem; }
 
 /* ============================================================
    8. FAQ
