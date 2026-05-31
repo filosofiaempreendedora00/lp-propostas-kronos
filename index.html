@@ -21,16 +21,6 @@
 </head>
 <body>
 
-  <!-- ====== Definição do símbolo da marca ")(" (portal / ampulheta) ====== -->
-  <svg width="0" height="0" class="svg-defs" aria-hidden="true" focusable="false">
-    <symbol id="kglyph" viewBox="0 0 300 400">
-      <!-- lâmina esquerda — afilada nas pontas, olho aberto no centro -->
-      <path d="M144 22 C 104 116, 104 284, 144 378 C 134 284, 134 116, 144 22 Z" />
-      <!-- lâmina direita espelhada -->
-      <path d="M156 22 C 196 116, 196 284, 156 378 C 166 284, 166 116, 156 22 Z" />
-    </symbol>
-  </svg>
-
   <!-- ===================== HEADER ===================== -->
   <header class="site-header" id="top">
     <div class="container header-inner">
@@ -62,7 +52,6 @@
     <div class="hero-bg" aria-hidden="true">
       <canvas class="vortex" id="vortex" data-cx="0.64" data-parallax="0.03"></canvas>
       <span class="hero-veil"></span>
-      <svg class="brand-glyph hero-glyph" data-parallax="0.08" data-base="translate(-50%, -50%)" aria-hidden="true"><use href="#kglyph"/></svg>
       <span class="grain"></span>
     </div>
 
@@ -107,7 +96,6 @@
 
   <!-- ===================== 2. AGITAÇÃO DA DOR ===================== -->
   <section class="section section-pain has-grain" id="dor">
-    <svg class="brand-glyph glyph-right" data-parallax="0.08" data-base="translateY(-50%)" aria-hidden="true"><use href="#kglyph"/></svg>
     <div class="container">
       <div class="section-head reveal">
         <span class="hand-divider" aria-hidden="true"></span>
@@ -155,6 +143,7 @@
       <canvas class="beam" id="beam"></canvas>
       <span class="grain"></span>
     </div>
+    <span class="kglyph k-center" data-parallax="0.05" data-base="translate(-50%, -50%)" aria-hidden="true"></span>
     <div class="container turn-inner reveal">
       <span class="hand-divider center" aria-hidden="true"></span>
       <p class="turn-rupture">O tradeoff nunca foi obrigatório.</p>
@@ -171,7 +160,6 @@
 
   <!-- ===================== 4. COMO FUNCIONA ===================== -->
   <section class="section section-how has-grain" id="como-funciona">
-    <svg class="brand-glyph glyph-left" data-parallax="0.06" data-base="translateY(-50%)" aria-hidden="true"><use href="#kglyph"/></svg>
     <div class="container">
       <div class="section-head reveal">
         <span class="hand-divider" aria-hidden="true"></span>
@@ -216,7 +204,6 @@
 
   <!-- ===================== 5. O QUE VOCÊ GANHA ===================== -->
   <section class="section section-gains section-light has-grain" id="ganhos">
-    <svg class="brand-glyph glyph-right glyph-ink" data-parallax="0.07" data-base="translateY(-50%)" aria-hidden="true"><use href="#kglyph"/></svg>
     <div class="container">
       <div class="section-head reveal">
         <span class="hand-divider" aria-hidden="true"></span>
@@ -344,7 +331,7 @@
 
   <!-- ===================== 7. GARANTIA ===================== -->
   <section class="section section-guarantee section-sand">
-    <svg class="brand-glyph glyph-center glyph-ink" data-parallax="0.05" data-base="translate(-50%, -50%)" aria-hidden="true"><use href="#kglyph"/></svg>
+    <span class="kglyph k-center kglyph-ink" data-parallax="0.05" data-base="translate(-50%, -50%)" aria-hidden="true"></span>
     <div class="container guarantee-inner reveal">
       <span class="guarantee-clock" aria-hidden="true">
         <svg viewBox="0 0 64 64" width="56" height="56">
@@ -441,7 +428,6 @@
     <div class="hero-bg final-bg" aria-hidden="true">
       <canvas class="vortex" id="vortex-final"></canvas>
       <span class="hero-veil"></span>
-      <svg class="brand-glyph glyph-center" data-parallax="0.06" data-base="translate(-50%, -50%)" aria-hidden="true"><use href="#kglyph"/></svg>
       <span class="grain"></span>
     </div>
     <div class="container final-inner reveal">
@@ -461,7 +447,6 @@
 
   <!-- ===================== FOOTER ===================== -->
   <footer class="site-footer has-grain">
-    <svg class="brand-glyph glyph-center footer-glyph" aria-hidden="true"><use href="#kglyph"/></svg>
     <div class="container footer-inner">
       <a href="#top" class="brand brand-footer">
         <span class="brand-mark" aria-hidden="true">
