@@ -370,6 +370,89 @@ em { font-style: italic; }
   font-size: 1.5rem;
   color: var(--areia);
 }
+
+/* ---- Visuais animados dos cards de dor ---- */
+.pain-visual {
+  position: relative;
+  height: 58px;
+  margin-bottom: 1.7rem;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+}
+/* 1 — propostas genéricas: três documentos idênticos + varredura de luz */
+.pv-generic { gap: 12px; }
+.pv-generic .doc {
+  flex: none;
+  width: 30px; height: 40px;
+  border: 1.4px solid var(--areia);
+  border-radius: 3px;
+  opacity: 0.85;
+  background:
+    linear-gradient(var(--areia), var(--areia)) 6px 10px / 18px 1.4px no-repeat,
+    linear-gradient(var(--areia), var(--areia)) 6px 17px / 18px 1.4px no-repeat,
+    linear-gradient(var(--areia), var(--areia)) 6px 24px / 11px 1.4px no-repeat;
+}
+.pv-generic::after {
+  content: "";
+  position: absolute; top: 0; bottom: 0; left: 0;
+  width: 42px;
+  background: linear-gradient(90deg, transparent, rgba(245, 239, 230, 0.22), transparent);
+  transform: translateX(-46px);
+}
+/* 2 — quem demora, perde: corrida (concorrente em creme chega na frente) */
+.pv-race { flex-direction: column; gap: 13px; justify-content: center; }
+.pv-race .track { position: relative; width: 190px; height: 1.4px; background: var(--areia-30); }
+.pv-race .flag { position: absolute; right: 0; top: -5px; width: 1.4px; height: 12px; background: var(--areia); }
+.pv-race .runner { position: absolute; top: -3px; left: 0; width: 7px; height: 7px; border-radius: 50%; }
+.pv-race .runner-fast { background: var(--creme); }
+.pv-race .runner-slow { background: var(--areia); }
+/* 3 — refém do desconto: linha de valor em queda */
+.pv-discount svg { width: 150px; height: 58px; overflow: visible; }
+.pv-line {
+  fill: none; stroke: var(--areia); stroke-width: 1.6;
+  stroke-linecap: round; stroke-linejoin: round;
+  stroke-dasharray: 170; stroke-dashoffset: 0;
+}
+.pv-dot {
+  fill: var(--creme);
+  offset-path: path("M6 12 L40 22 L74 30 L108 44 L134 52");
+  offset-distance: 100%;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .pv-generic::after { animation: pvSweep 3.6s ease-in-out infinite; }
+  .pv-race .runner-fast { animation: pvFast 3.4s ease-in-out infinite; }
+  .pv-race .runner-slow { animation: pvSlow 3.4s ease-in-out infinite; }
+  .pv-line { animation: pvDraw 3.6s ease-in-out infinite; }
+  .pv-dot { animation: pvDot 3.6s ease-in-out infinite; }
+}
+@keyframes pvSweep {
+  0% { transform: translateX(-46px); }
+  55%, 100% { transform: translateX(152px); }
+}
+@keyframes pvFast {
+  0% { left: 0; opacity: 0; }
+  7% { opacity: 1; }
+  40% { left: calc(100% - 7px); }
+  86% { left: calc(100% - 7px); opacity: 1; }
+  96%, 100% { left: calc(100% - 7px); opacity: 0; }
+}
+@keyframes pvSlow {
+  0% { left: 0; opacity: 0; }
+  7% { opacity: 1; }
+  70% { left: 52%; }
+  86% { left: 55%; opacity: 1; }
+  96%, 100% { left: 55%; opacity: 0; }
+}
+@keyframes pvDraw {
+  0% { stroke-dashoffset: 170; }
+  55%, 100% { stroke-dashoffset: 0; }
+}
+@keyframes pvDot {
+  0% { offset-distance: 0%; opacity: 0; }
+  7% { opacity: 1; }
+  55%, 100% { offset-distance: 100%; opacity: 1; }
+}
 .pain-card h3 { margin-top: 0.8rem; font-size: 1.85rem; }
 .pain-card p { margin-top: 0.9rem; color: var(--areia); font-weight: 300; }
 
