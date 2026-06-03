@@ -381,25 +381,24 @@ em { font-style: italic; }
   overflow: hidden;
 }
 /* 1 — propostas genéricas: três documentos idênticos + varredura de luz */
-.pv-generic { gap: 12px; }
+/* 1 — propostas genéricas: cópias idênticas saindo da pilha */
+.pv-generic { position: relative; }
 .pv-generic .doc {
-  flex: none;
+  position: absolute;
+  top: 9px; left: 0;
   width: 30px; height: 40px;
   border: 1.4px solid var(--areia);
   border-radius: 3px;
-  opacity: 0.85;
   background:
     linear-gradient(var(--areia), var(--areia)) 6px 10px / 18px 1.4px no-repeat,
     linear-gradient(var(--areia), var(--areia)) 6px 17px / 18px 1.4px no-repeat,
     linear-gradient(var(--areia), var(--areia)) 6px 24px / 11px 1.4px no-repeat;
 }
-.pv-generic::after {
-  content: "";
-  position: absolute; top: 0; bottom: 0; left: 0;
-  width: 42px;
-  background: linear-gradient(90deg, transparent, rgba(245, 239, 230, 0.22), transparent);
-  transform: translateX(-46px);
-}
+.pv-generic .doc-1 { left: 0;    opacity: 0.35; }
+.pv-generic .doc-2 { left: 14px; opacity: 0.55; }
+.pv-generic .doc-3 { left: 28px; opacity: 0.9; }
+.pv-generic .doc-copy { left: 28px; opacity: 0; }
+
 /* 2 — quem demora, perde: corrida (concorrente em creme chega na frente) */
 .pv-race { flex-direction: column; gap: 13px; justify-content: center; }
 .pv-race .track { position: relative; width: 190px; height: 1.4px; background: var(--areia-30); }
@@ -407,28 +406,38 @@ em { font-style: italic; }
 .pv-race .runner { position: absolute; top: -3px; left: 0; width: 7px; height: 7px; border-radius: 50%; }
 .pv-race .runner-fast { background: var(--creme); }
 .pv-race .runner-slow { background: var(--areia); }
-/* 3 — refém do desconto: linha de valor em queda */
-.pv-discount svg { width: 150px; height: 58px; overflow: visible; }
-.pv-line {
-  fill: none; stroke: var(--areia); stroke-width: 1.6;
-  stroke-linecap: round; stroke-linejoin: round;
-  stroke-dasharray: 170; stroke-dashoffset: 0;
+
+/* 3 — refém do desconto: de R$ 100 por R$ 70 (o desconto que você dá) */
+.pv-discount { gap: 0.8rem; }
+.pd-old, .pd-new {
+  font-family: var(--serif);
+  font-weight: 600;
+  font-size: 1.5rem;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+  opacity: 0;
 }
-.pv-dot {
-  fill: var(--creme);
-  offset-path: path("M6 12 L40 22 L74 30 L108 44 L134 52");
-  offset-distance: 100%;
+.pd-old { color: var(--areia); position: relative; }
+.pd-old .pd-strike {
+  position: absolute; left: -3px; right: -3px; top: 54%;
+  height: 1.5px; background: var(--areia);
+  transform: scaleX(0); transform-origin: left;
 }
+.pd-new { color: var(--creme); }
+
 @media (prefers-reduced-motion: no-preference) {
-  .pv-generic::after { animation: pvSweep 3.6s ease-in-out infinite; }
+  .pv-generic .doc-copy { animation: pvCopy 2.8s ease-in-out infinite; }
   .pv-race .runner-fast { animation: pvFast 3.4s ease-in-out infinite; }
   .pv-race .runner-slow { animation: pvSlow 3.4s ease-in-out infinite; }
-  .pv-line { animation: pvDraw 3.6s ease-in-out infinite; }
-  .pv-dot { animation: pvDot 3.6s ease-in-out infinite; }
+  .pd-old { animation: pdOld 4s ease-in-out infinite; }
+  .pd-old .pd-strike { animation: pdStrike 4s ease-in-out infinite; }
+  .pd-new { animation: pdNew 4s ease-in-out infinite; }
 }
-@keyframes pvSweep {
-  0% { transform: translateX(-46px); }
-  55%, 100% { transform: translateX(152px); }
+@keyframes pvCopy {
+  0%   { left: 28px; opacity: 0; }
+  14%  { left: 28px; opacity: 0.95; }
+  60%  { left: 70px; opacity: 0; }
+  100% { left: 70px; opacity: 0; }
 }
 @keyframes pvFast {
   0% { left: 0; opacity: 0; }
@@ -444,14 +453,20 @@ em { font-style: italic; }
   86% { left: 55%; opacity: 1; }
   96%, 100% { left: 55%; opacity: 0; }
 }
-@keyframes pvDraw {
-  0% { stroke-dashoffset: 170; }
-  55%, 100% { stroke-dashoffset: 0; }
+@keyframes pdOld {
+  0%, 4% { opacity: 0; }
+  12% { opacity: 0.85; }
+  88% { opacity: 0.85; }
+  96%, 100% { opacity: 0; }
 }
-@keyframes pvDot {
-  0% { offset-distance: 0%; opacity: 0; }
-  7% { opacity: 1; }
-  55%, 100% { offset-distance: 100%; opacity: 1; }
+@keyframes pdStrike {
+  0%, 26% { transform: scaleX(0); }
+  44%, 100% { transform: scaleX(1); }
+}
+@keyframes pdNew {
+  0%, 46% { opacity: 0; transform: translateY(4px); }
+  58%, 88% { opacity: 1; transform: translateY(0); }
+  96%, 100% { opacity: 0; transform: translateY(0); }
 }
 .pain-card h3 { margin-top: 0.8rem; font-size: 1.85rem; }
 .pain-card p { margin-top: 0.9rem; color: var(--areia); font-weight: 300; }
