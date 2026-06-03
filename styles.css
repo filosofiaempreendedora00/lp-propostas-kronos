@@ -630,7 +630,9 @@ em { font-style: italic; }
   padding-top: 1.4rem; padding-bottom: 1.4rem;
 }
 .c-bad.c-head { color: var(--areia); }
-.c-good.c-head { color: var(--creme); justify-content: center; }
+.c-good.c-head { color: var(--creme); justify-content: center; gap: 0.5rem; }
+.c-head-logo { height: 17px; width: auto; display: inline-block; }
+.c-head-pre { line-height: 1; }
 
 /* marcas de check / x */
 .mk {
@@ -1019,7 +1021,9 @@ em { font-style: italic; }
   }
   .c-good .c-txt { flex: 1; }
   .c-tag {
-    display: inline-block;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.32rem;
     margin-left: auto;
     font-size: 0.64rem;
     letter-spacing: 0.14em;
@@ -1027,6 +1031,7 @@ em { font-style: italic; }
     color: var(--areia);
     white-space: nowrap;
   }
+  .c-tag img { height: 12px; width: auto; display: block; }
 }
 
 /* ============================================================
