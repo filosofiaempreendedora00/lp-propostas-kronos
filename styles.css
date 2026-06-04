@@ -1152,27 +1152,17 @@ em { font-style: italic; }
 }
 .guarantee-inner { max-width: 680px; margin-inline: auto; position: relative; z-index: 2; }
 
-/* selo de garantia */
-.seal { display: block; width: clamp(118px, 16vw, 148px); margin: 0 auto 1.9rem; }
-.seal svg { width: 100%; height: auto; display: block; overflow: visible; }
-.seal-ring { fill: none; stroke: var(--sepia); stroke-width: 1; opacity: 0.85; }
-.seal-arc {
-  fill: var(--sepia);
-  font-family: var(--sans);
-  font-size: 10.5px;
-  font-weight: 500;
-  letter-spacing: 2.4px;
-  text-anchor: middle;
+/* selo de garantia (lacre de cera) */
+.seal { display: block; width: clamp(168px, 22vw, 224px); margin: 0 auto 2.1rem; }
+.seal img {
+  width: 100%;
+  height: auto;
+  display: block;
+  /* sombra de contato realista, acompanha o recorte ondulado do lacre */
+  filter:
+    drop-shadow(0 16px 24px rgba(21, 12, 6, 0.40))
+    drop-shadow(0 4px 7px rgba(21, 12, 6, 0.32));
 }
-.seal-num {
-  fill: var(--onix);
-  font-family: var(--serif);
-  font-weight: 600;
-  font-size: 41px;
-  text-anchor: middle;
-  letter-spacing: -0.01em;
-}
-.seal-dot { fill: var(--sepia); }
 
 .guarantee-title {
   font-size: clamp(1.85rem, 3.6vw, 2.7rem);
