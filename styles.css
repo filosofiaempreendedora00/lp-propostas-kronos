@@ -693,6 +693,52 @@ em { font-style: italic; }
   transform: translateY(-1.75px);
 }
 
+/* ---- Metodologia: blocos da proposta + gatilho ---- */
+.method {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: clamp(1.5rem, 3vw, 2.2rem) clamp(2rem, 5vw, 4rem);
+  position: relative;
+  z-index: 2;
+}
+.method-block {
+  display: flex;
+  gap: 1.1rem;
+  border-top: 1px solid var(--areia-14);
+  padding-top: 1.35rem;
+}
+.mb-num {
+  flex: none;
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 1.5rem;
+  line-height: 1;
+  color: var(--areia);
+}
+.mb-body h3 {
+  font-family: var(--serif);
+  font-weight: 500;
+  font-size: clamp(1.25rem, 2vw, 1.55rem);
+  color: var(--creme);
+}
+.mb-body p {
+  margin-top: 0.45rem;
+  color: var(--areia);
+  font-weight: 300;
+  font-size: 0.96rem;
+  line-height: 1.45;
+}
+.method-foot {
+  margin-top: clamp(2.6rem, 5vw, 3.6rem);
+  text-align: center;
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: clamp(1.25rem, 2.3vw, 1.7rem);
+  color: var(--creme);
+  position: relative;
+  z-index: 2;
+}
+
 /* ============================================================
    5. O QUE VOCÊ GANHA (creme)
    ============================================================ */
@@ -1114,6 +1160,7 @@ em { font-style: italic; }
   .hero { min-height: auto; }
   .steps { grid-template-columns: 1fr; }
   .facets { grid-template-columns: 1fr; }
+  .method { grid-template-columns: 1fr; }
   .scroll-cue { display: none; }
 }
 
