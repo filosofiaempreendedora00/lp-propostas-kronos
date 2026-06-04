@@ -267,6 +267,51 @@ em { font-style: italic; }
 /* Superfícies por seção (ritmo claro/escuro) */
 .section-light { background: var(--creme); color: var(--onix); }
 
+/* Faixa de big numbers (prova social) */
+.section-stats {
+  position: relative;
+  padding-block: clamp(3.2rem, 6vw, 5rem);
+  border-block: 1px solid rgba(168, 144, 112, 0.28);
+}
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  align-items: start;
+  text-align: center;
+}
+.stat { position: relative; padding: 0.4rem 1rem; }
+.stat + .stat::before {
+  content: "";
+  position: absolute;
+  left: 0; top: 12%; bottom: 12%;
+  width: 1px;
+  background: rgba(168, 144, 112, 0.35);
+}
+.stat-num {
+  display: block;
+  font-family: var(--serif);
+  font-weight: 600;
+  font-size: clamp(2.6rem, 5.2vw, 4.1rem);
+  line-height: 1;
+  letter-spacing: -0.01em;
+  color: var(--areia);
+  font-variant-numeric: tabular-nums;
+}
+.stat-affix { font-size: 0.58em; letter-spacing: 0; }
+.stat-label {
+  display: block;
+  margin-top: 0.8rem;
+  font-size: 0.84rem;
+  line-height: 1.35;
+  letter-spacing: 0.02em;
+  color: var(--sepia);
+  opacity: 0.82;
+}
+@media (max-width: 720px) {
+  .stats-grid { grid-template-columns: repeat(2, 1fr); row-gap: 2.4rem; }
+  .stat:nth-child(odd)::before { display: none; }
+}
+
 /* Texturas de areia reais da marca (uso contido nas seções escuras) */
 .tex-sand-sepia {
   background-color: var(--sepia);

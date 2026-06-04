@@ -353,8 +353,16 @@
   function initCountUp() {
     var els = document.querySelectorAll("[data-count]");
     if (!els.length) return;
+    function fmt(el, val) {
+      var dec = parseInt(el.getAttribute("data-decimals") || "0", 10);
+      return val.toLocaleString("pt-BR", {
+        minimumFractionDigits: dec,
+        maximumFractionDigits: dec,
+        useGrouping: el.hasAttribute("data-sep")
+      });
+    }
     if (REDUCED || !("IntersectionObserver" in window)) {
-      els.forEach(function (el) { el.textContent = el.getAttribute("data-count"); });
+      els.forEach(function (el) { el.textContent = fmt(el, parseFloat(el.getAttribute("data-count"))); });
       return;
     }
     var io = new IntersectionObserver(function (entries) {
@@ -363,13 +371,13 @@
         var el = entry.target;
         io.unobserve(el);
         var target = parseFloat(el.getAttribute("data-count"));
-        var dur = 1400, t0 = null;
+        var dur = 1700, t0 = null;
         function tick(ts) {
           if (t0 === null) t0 = ts;
           var p = Math.min(1, (ts - t0) / dur);
           // easeOutExpo
           var e = p === 1 ? 1 : 1 - Math.pow(2, -10 * p);
-          el.textContent = Math.round(target * e).toString();
+          el.textContent = fmt(el, target * e);
           if (p < 1) requestAnimationFrame(tick);
         }
         requestAnimationFrame(tick);
