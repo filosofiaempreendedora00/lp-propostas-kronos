@@ -738,47 +738,73 @@ em { font-style: italic; }
   transform: translateY(-1.75px);
 }
 
-/* ---- Metodologia: blocos da proposta + gatilho ---- */
+/* tag mais forte (Metodologia Kronos) */
+.section-tag-strong {
+  color: var(--creme);
+  border-color: var(--areia);
+  background: var(--areia-14);
+}
+
+/* ---- Metodologia: cards numerados (bloco + gatilho) ---- */
 .method {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: clamp(1.5rem, 3vw, 2.2rem) clamp(2rem, 5vw, 4rem);
+  grid-template-columns: repeat(auto-fit, minmax(248px, 1fr));
+  gap: clamp(1rem, 2vw, 1.5rem);
   position: relative;
   z-index: 2;
 }
 .method-block {
   display: flex;
-  gap: 1.1rem;
-  border-top: 1px solid var(--areia-14);
-  padding-top: 1.35rem;
+  flex-direction: column;
+  padding: 1.7rem 1.6rem 1.8rem;
+  border: 1px solid var(--areia-14);
+  border-radius: 10px;
+  background: rgba(46, 32, 23, 0.55);
+  box-shadow: var(--shadow-card);
+  transition: transform 0.5s var(--ease-out), border-color 0.5s var(--ease);
 }
+.method-block:hover { transform: translateY(-5px); border-color: var(--areia-30); }
 .mb-num {
-  flex: none;
   font-family: var(--serif);
-  font-style: italic;
-  font-size: 1.5rem;
+  font-weight: 600;
+  font-size: 2.5rem;
   line-height: 1;
   color: var(--areia);
 }
-.mb-body h3 {
+.mb-name {
+  margin-top: 0.7rem;
   font-family: var(--serif);
   font-weight: 500;
-  font-size: clamp(1.25rem, 2vw, 1.55rem);
+  font-size: 1.4rem;
+  line-height: 1.1;
   color: var(--creme);
 }
-.mb-body p {
-  margin-top: 0.45rem;
+.mb-trigger {
+  align-self: flex-start;
+  margin-top: 0.8rem;
+  font-family: var(--sans);
+  font-size: 0.64rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--areia);
+  background: var(--areia-08);
+  border: 1px solid var(--areia-20);
+  border-radius: 100px;
+  padding: 0.32rem 0.75rem;
+}
+.method-block p {
+  margin-top: 1rem;
   color: var(--areia);
   font-weight: 300;
-  font-size: 0.96rem;
-  line-height: 1.45;
+  font-size: 0.95rem;
+  line-height: 1.5;
 }
 .method-foot {
-  margin-top: clamp(2.6rem, 5vw, 3.6rem);
+  margin-top: clamp(2.8rem, 5vw, 3.8rem);
   text-align: center;
   font-family: var(--serif);
   font-style: italic;
-  font-size: clamp(1.25rem, 2.3vw, 1.7rem);
+  font-size: clamp(1.3rem, 2.4vw, 1.8rem);
   color: var(--creme);
   position: relative;
   z-index: 2;
