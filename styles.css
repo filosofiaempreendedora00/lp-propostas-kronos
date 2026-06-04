@@ -483,8 +483,10 @@ em { font-style: italic; }
 }
 /* feixe de luz real da marca com leve movimento (ken burns) */
 .turn-bg {
-  position: absolute; inset: -5%;
+  position: absolute; inset: -8%;
   background: url("assets/feixe-luz.jpg") center / cover no-repeat;
+  /* dissolve os grãos estáticos da imagem; mantém só o brilho do feixe */
+  filter: blur(3px);
   z-index: 0;
   animation: turnPan 26s ease-in-out infinite alternate;
 }

@@ -470,7 +470,7 @@
     var w = 0, h = 0, parts = [], raf = null, running = false;
 
     function seed() {
-      var n = Math.round(Math.min(110, (w * h) / 9000));
+      var n = Math.round(Math.min(260, (w * h) / 3800));
       parts = [];
       for (var i = 0; i < n; i++) {
         parts.push({
