@@ -460,6 +460,75 @@
   /* ============================================================
      BOOT
      ============================================================ */
+  /* ============================================================
+     POEIRA FLUTUANTE — partículas douradas em deriva lenta
+     (camada de vida sobre o feixe de luz da Virada)
+     ============================================================ */
+  function Dust(canvas) {
+    var ctx = canvas.getContext("2d", { alpha: true });
+    var dpr = Math.min(window.devicePixelRatio || 1, 1.75);
+    var w = 0, h = 0, parts = [], raf = null, running = false;
+
+    function seed() {
+      var n = Math.round(Math.min(64, (w * h) / 15000));
+      parts = [];
+      for (var i = 0; i < n; i++) {
+        parts.push({
+          x: Math.random() * w, y: Math.random() * h,
+          r: Math.random() * 1.4 + 0.4,
+          a: Math.random() * 0.45 + 0.12,
+          vx: (Math.random() * 0.10 + 0.02),
+          vy: -(Math.random() * 0.14 + 0.03),
+          tw: Math.random() * Math.PI * 2,
+          c: Math.random() > 0.85 ? COLOR.creme : COLOR.areia
+        });
+      }
+    }
+    function resize() {
+      w = canvas.clientWidth; h = canvas.clientHeight;
+      if (!w || !h) return;
+      canvas.width = Math.floor(w * dpr);
+      canvas.height = Math.floor(h * dpr);
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      seed();
+      if (REDUCED) draw();
+    }
+    function draw() {
+      ctx.clearRect(0, 0, w, h);
+      for (var i = 0; i < parts.length; i++) {
+        var p = parts[i];
+        var al = p.a * (0.5 + 0.5 * Math.sin(p.tw));
+        if (al <= 0.01) continue;
+        ctx.globalAlpha = al;
+        ctx.fillStyle = p.c;
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+        ctx.fill();
+      }
+      ctx.globalAlpha = 1;
+    }
+    function frame() {
+      for (var i = 0; i < parts.length; i++) {
+        var p = parts[i];
+        p.x += p.vx; p.y += p.vy; p.tw += 0.018;
+        if (p.y < -4) p.y = h + 4;
+        if (p.x > w + 4) p.x = -4;
+      }
+      draw();
+      raf = requestAnimationFrame(frame);
+    }
+    function start() { if (running || REDUCED) return; running = true; frame(); }
+    function stop() { running = false; if (raf) cancelAnimationFrame(raf); raf = null; }
+
+    resize();
+    window.addEventListener("resize", debounce(resize, 200));
+    if ("IntersectionObserver" in window) {
+      new IntersectionObserver(function (es) {
+        es.forEach(function (e) { e.isIntersecting ? start() : stop(); });
+      }, { threshold: 0.01 }).observe(canvas);
+    } else { start(); }
+  }
+
   function boot() {
     initHeader();
     initReveal();
@@ -473,6 +542,8 @@
     document.querySelectorAll(".vortex").forEach(function (c) { Vortex(c); });
     var beam = document.getElementById("beam");
     if (beam) LightBeam(beam);
+    var dust = document.getElementById("turn-particles");
+    if (dust) Dust(dust);
   }
 
   if (document.readyState === "loading") {
