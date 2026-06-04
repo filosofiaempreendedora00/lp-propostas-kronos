@@ -325,6 +325,22 @@ em { font-style: italic; }
   background-size: cover;
   background-position: center;
 }
+/* No mobile, o JPG com cover amplia demais (areia grosseira). Troca por um
+   grão vetorial (feTurbulence) — nítido em qualquer resolução/DPR. */
+@media (max-width: 760px) {
+  .tex-sand-sepia, .tex-sand-onix { background-image: none; }
+  .tex-sand-sepia::before, .tex-sand-onix::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    background-image: var(--grain);
+    background-size: 150px 150px;
+    opacity: 0.06;
+    mix-blend-mode: overlay;
+  }
+}
 
 /* ============================================================
    1. HERO
