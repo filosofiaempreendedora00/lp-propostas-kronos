@@ -603,6 +603,54 @@ em { font-style: italic; }
 .step-body h3 { font-size: 1.6rem; }
 .step-body p { margin-top: 0.7rem; color: var(--areia); font-weight: 300; }
 
+/* tag "Como funciona" */
+.section-tag {
+  display: inline-block;
+  font-family: var(--sans);
+  font-size: 0.72rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  font-weight: 500;
+  color: var(--areia);
+  border: 1px solid var(--areia-30);
+  border-radius: 100px;
+  padding: 0.45rem 0.95rem;
+  margin-bottom: 1.5rem;
+}
+
+/* retângulo placeholder de GIF (preview) */
+.step-media {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  margin: 0 0 1.5rem;
+  border: 1px solid var(--areia-20);
+  border-radius: 8px;
+  background: rgba(21, 12, 6, 0.32);
+  overflow: hidden;
+}
+.step-media::after {
+  content: "GIF";
+  position: absolute; inset: 0;
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--sans);
+  font-size: 0.7rem; letter-spacing: 0.22em; text-transform: uppercase;
+  color: var(--areia); opacity: 0.4;
+}
+.step-media::before {
+  content: "";
+  position: absolute; inset: 0;
+  background: linear-gradient(110deg, transparent 30%, rgba(245, 239, 230, 0.06) 50%, transparent 70%);
+  transform: translateX(-100%);
+}
+@media (prefers-reduced-motion: no-preference) {
+  .step-media::before { animation: mediaShimmer 2.8s ease-in-out infinite; }
+}
+@keyframes mediaShimmer {
+  0% { transform: translateX(-100%); }
+  60%, 100% { transform: translateX(100%); }
+}
+
 /* ============================================================
    PERSONALIZAÇÃO REAL — o que entra "sob medida"
    ============================================================ */
