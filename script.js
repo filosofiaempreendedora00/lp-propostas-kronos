@@ -432,16 +432,21 @@
   }
 
   function initCheckout() {
-    // PLACEHOLDER: defina a URL do checkout integrado (uma por plano ou única).
+    // PLACEHOLDER: cole aqui a URL de checkout de cada plano.
+    // Enquanto vazias, os botões abrem o link âncora #planos (não quebram).
     var CHECKOUT_URL = {
-      individual: "", // PLACEHOLDER
-      time:       "", // PLACEHOLDER
-      empresa:    ""  // PLACEHOLDER
+      individual: "", // PLACEHOLDER — link de checkout do plano Individual
+      time:       ""  // PLACEHOLDER — link de checkout do plano Time
     };
     document.querySelectorAll("[data-checkout]").forEach(function (link) {
       var plan = link.getAttribute("data-checkout");
       var url = CHECKOUT_URL[plan];
-      if (url) { link.setAttribute("href", url); return; }
+      if (url) {
+        link.setAttribute("href", url);
+        link.setAttribute("target", "_blank");
+        link.setAttribute("rel", "noopener");
+        return;
+      }
       link.addEventListener("click", function (e) {
         e.preventDefault();
         var planos = document.getElementById("planos");
