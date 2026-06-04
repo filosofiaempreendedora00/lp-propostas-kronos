@@ -470,15 +470,16 @@
     var w = 0, h = 0, parts = [], raf = null, running = false;
 
     function seed() {
-      var n = Math.round(Math.min(64, (w * h) / 15000));
+      var n = Math.round(Math.min(110, (w * h) / 9000));
       parts = [];
       for (var i = 0; i < n; i++) {
         parts.push({
           x: Math.random() * w, y: Math.random() * h,
           r: Math.random() * 1.4 + 0.4,
           a: Math.random() * 0.45 + 0.12,
-          vx: (Math.random() * 0.10 + 0.02),
-          vy: -(Math.random() * 0.14 + 0.03),
+          // sandstorm: deriva rápida para a direita, leve oscilação vertical
+          vx: (Math.random() * 1.0 + 0.8),
+          vy: ((Math.random() - 0.5) * 0.25),
           tw: Math.random() * Math.PI * 2,
           c: Math.random() > 0.85 ? COLOR.creme : COLOR.areia
         });
@@ -510,9 +511,11 @@
     function frame() {
       for (var i = 0; i < parts.length; i++) {
         var p = parts[i];
-        p.x += p.vx; p.y += p.vy; p.tw += 0.018;
+        p.x += p.vx; p.y += p.vy; p.tw += 0.02;
+        // ao sair pela direita, reentra pela esquerda numa altura nova
+        if (p.x > w + 4) { p.x = -4; p.y = Math.random() * h; }
         if (p.y < -4) p.y = h + 4;
-        if (p.x > w + 4) p.x = -4;
+        else if (p.y > h + 4) p.y = -4;
       }
       draw();
       raf = requestAnimationFrame(frame);
