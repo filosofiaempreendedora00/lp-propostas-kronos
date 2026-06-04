@@ -133,14 +133,16 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
 .section-title {
   font-size: clamp(2.1rem, 4.8vw, 3.5rem);
   letter-spacing: -0.005em;
+  line-height: 1.02;
 }
 .section-title em { color: var(--areia); }
 .section-lead {
-  margin-top: 1.1rem;
-  max-width: 46ch;
+  margin-top: 0.95rem;
+  max-width: 52ch;
   color: var(--areia);
   font-size: 1.12rem;
   font-weight: 300;
+  line-height: 1.5;
 }
 /* lead que deve caber em uma linha (sem quebra órfã) */
 .section-lead.lead-wide { max-width: none; text-wrap: balance; }
