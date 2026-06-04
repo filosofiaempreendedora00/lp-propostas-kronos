@@ -995,6 +995,7 @@ em { font-style: italic; }
 /* alinha cabeçalho e toggle ao bloco central dos cards */
 .section-plans .section-head { text-align: center; }
 .section-plans .section-head .hand-divider { margin-inline: auto; }
+.section-plans .section-lead { margin-inline: auto; }
 .section-plans .billing-toggle { display: flex; width: max-content; margin-inline: auto; }
 
 .billing-toggle {
