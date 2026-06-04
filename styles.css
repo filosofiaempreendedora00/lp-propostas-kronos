@@ -394,10 +394,11 @@ em { font-style: italic; }
     linear-gradient(var(--areia), var(--areia)) 6px 17px / 18px 1.4px no-repeat,
     linear-gradient(var(--areia), var(--areia)) 6px 24px / 11px 1.4px no-repeat;
 }
-.pv-generic .doc-1 { left: 0;    opacity: 0.35; }
-.pv-generic .doc-2 { left: 14px; opacity: 0.55; }
-.pv-generic .doc-3 { left: 28px; opacity: 0.9; }
-.pv-generic .doc-copy { left: 28px; opacity: 0; }
+.pv-generic .doc-1 { left: 0;     opacity: 0.45; }
+.pv-generic .doc-2 { left: 36px;  opacity: 0.6; }
+.pv-generic .doc-3 { left: 72px;  opacity: 0.75; }
+.pv-generic .doc-4 { left: 108px; opacity: 0.92; }
+.pv-generic .doc-copy { left: 108px; opacity: 0; }
 
 /* 2 — quem demora, perde: corrida (concorrente em creme chega na frente) */
 .pv-race { flex-direction: column; gap: 13px; justify-content: center; }
@@ -434,10 +435,10 @@ em { font-style: italic; }
   .pd-new { animation: pdNew 4s ease-in-out infinite; }
 }
 @keyframes pvCopy {
-  0%   { left: 28px; opacity: 0; }
-  14%  { left: 28px; opacity: 0.95; }
-  60%  { left: 70px; opacity: 0; }
-  100% { left: 70px; opacity: 0; }
+  0%   { left: 108px; opacity: 0; }
+  14%  { left: 108px; opacity: 0.95; }
+  60%  { left: 152px; opacity: 0; }
+  100% { left: 152px; opacity: 0; }
 }
 @keyframes pvFast {
   0% { left: 0; opacity: 0; }
