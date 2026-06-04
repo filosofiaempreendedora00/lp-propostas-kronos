@@ -911,15 +911,15 @@ em { font-style: italic; }
    PROVA SOCIAL — depoimentos (faixa creme)
    ============================================================ */
 .section-proof .section-head { text-align: center; }
-.section-proof .hand-divider { margin-inline: auto; background: rgba(46,32,23,0.25); }
-.section-proof .hand-divider::before { background: var(--sepia); }
+.section-proof .section-lead { margin-inline: auto; color: var(--sepia); opacity: 0.82; }
 .proof-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: clamp(1.25rem, 2.5vw, 2rem);
+  gap: clamp(1.25rem, 2.5vw, 1.8rem);
   align-items: stretch;
   position: relative;
   z-index: 2;
+  margin-top: clamp(2rem, 4vw, 3rem);
 }
 .proof-card {
   display: flex;
@@ -955,13 +955,29 @@ em { font-style: italic; }
 }
 .proof-card figcaption {
   display: flex;
-  flex-direction: column;
-  gap: 0.15rem;
-  padding-top: 1.2rem;
-  border-top: 1px solid rgba(168, 144, 112, 0.35);
+  align-items: center;
+  gap: 0.85rem;
+  padding-top: 1.3rem;
+  border-top: 1px solid rgba(168, 144, 112, 0.3);
 }
+.proof-avatar {
+  flex: none;
+  width: 46px; height: 46px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  background: var(--sepia);
+  background-size: cover;
+  background-position: center;
+  color: var(--creme);
+  font-family: var(--serif);
+  font-weight: 500;
+  font-size: 0.95rem;
+  letter-spacing: 0.02em;
+  border: 1px solid rgba(168, 144, 112, 0.4);
+}
+.proof-id { display: flex; flex-direction: column; gap: 0.1rem; min-width: 0; }
 .proof-name { font-weight: 500; color: var(--onix); }
-.proof-role { font-size: 0.88rem; color: var(--areia); }
+.proof-role { font-size: 0.86rem; color: var(--areia); }
 
 /* ============================================================
    6. PLANOS
