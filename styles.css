@@ -1569,3 +1569,56 @@ em { font-style: italic; }
   .reveal { opacity: 1; transform: none; }
   .plan-featured { transform: translateY(-10px); }
 }
+
+/* ============================================================
+   PROTEÇÃO DE CONTEÚDO (dissuasão de cópia)
+   ============================================================ */
+/* imagens e ativos: não arrastáveis, não selecionáveis */
+img, picture, svg, .seal, .seal img, .proof-avatar, .brand-logo, .kglyph {
+  -webkit-user-drag: none;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none; /* impede o "salvar imagem" no long-press (iOS) */
+}
+
+/* bloqueio de seleção do texto quando a camada de proteção está ativa.
+   Exceções: inputs e o e-mail de contato continuam selecionáveis/copiáveis. */
+html.kp-protect, html.kp-protect body {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  user-select: none;
+}
+html.kp-protect input,
+html.kp-protect textarea,
+html.kp-protect [contenteditable],
+html.kp-protect a[href^="mailto:"],
+html.kp-protect .selectable {
+  -webkit-user-select: text;
+  -moz-user-select: text;
+  user-select: text;
+}
+
+/* toast discreto de aviso */
+.kp-toast {
+  position: fixed;
+  left: 50%;
+  bottom: 26px;
+  transform: translateX(-50%) translateY(10px);
+  background: rgba(21, 12, 6, 0.94);
+  color: var(--creme);
+  font: 500 0.82rem/1 var(--sans);
+  letter-spacing: 0.02em;
+  padding: 0.72rem 1.15rem;
+  border: 1px solid var(--areia-30);
+  border-radius: 6px;
+  box-shadow: 0 14px 40px -18px rgba(0, 0, 0, 0.7);
+  opacity: 0;
+  pointer-events: none;
+  z-index: 9999;
+  transition: opacity 0.3s var(--ease), transform 0.3s var(--ease-out);
+}
+.kp-toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+@media (prefers-reduced-motion: reduce) {
+  .kp-toast { transition: opacity 0.2s linear; }
+}
