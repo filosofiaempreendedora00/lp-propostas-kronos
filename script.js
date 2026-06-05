@@ -30,7 +30,8 @@
     var w = 0, h = 0, cx = 0, cy = 0, maxR = 0;
     var spiral = null, stars = null;
     var angle = 0, raf = null, running = false;
-    var SPEED = 0.00045; // rotação lenta (rad/frame)
+    var SPEED = parseFloat(canvas.getAttribute("data-speed")) || 0.00045; // rotação (rad/frame)
+    var VIS = parseFloat(canvas.getAttribute("data-vis")) || 1;           // visibilidade dos grãos
 
     function cxRatio() {
       var b = parseFloat(canvas.getAttribute("data-cx"));
@@ -81,7 +82,7 @@
         if (t > 1) continue;
         var edge = t > 0.70 ? Math.max(0, 1 - (t - 0.70) / 0.30) : 1; // desbota nas bordas
         var inner = 0.5 + 0.5 * (1 - t);                              // mais quente no centro
-        var a = (0.16 + rnd() * 0.52) * inner * edge;
+        var a = (0.16 + rnd() * 0.52) * inner * edge * VIS;
         if (a <= 0.012) continue;
 
         var pick = rnd();
