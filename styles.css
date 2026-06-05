@@ -1219,10 +1219,50 @@ em { font-style: italic; }
   width: 100%;
   height: auto;
   display: block;
+  transform-origin: 50% 52%;
   /* sombra de contato realista, acompanha o recorte ondulado do lacre */
   filter:
     drop-shadow(0 20px 30px rgba(21, 12, 6, 0.42))
     drop-shadow(0 5px 9px rgba(21, 12, 6, 0.32));
+}
+
+/* ----- efeito "carimbo": o lacre prensa e assenta ao entrar na tela ----- */
+.guarantee-grid.reveal .seal img { opacity: 0; }
+.guarantee-grid.is-visible .seal img {
+  animation: sealStamp 1.05s cubic-bezier(0.16, 1, 0.3, 1) 0.18s both;
+}
+@keyframes sealStamp {
+  0% {
+    opacity: 0;
+    transform: perspective(900px) translateY(-14px) scale(1.32) rotateX(14deg) rotate(-3deg);
+    filter: blur(8px) drop-shadow(0 6px 14px rgba(21, 12, 6, 0));
+  }
+  45% {
+    opacity: 1;
+    filter: blur(0.4px)
+      drop-shadow(0 8px 14px rgba(21, 12, 6, 0.30));
+  }
+  /* impacto: prensa com leve achatamento e sombra forte de contato */
+  62% {
+    opacity: 1;
+    transform: perspective(900px) translateY(0) scale(0.963) rotateX(0deg) rotate(0.5deg);
+    filter: blur(0)
+      drop-shadow(0 11px 16px rgba(21, 12, 6, 0.52))
+      drop-shadow(0 3px 6px rgba(21, 12, 6, 0.44));
+  }
+  /* micro-repique e assentamento */
+  78% { transform: perspective(900px) translateY(0) scale(1.012) rotate(0deg); }
+  100% {
+    opacity: 1;
+    transform: perspective(900px) translateY(0) scale(1) rotateX(0deg) rotate(0deg);
+    filter: blur(0)
+      drop-shadow(0 20px 30px rgba(21, 12, 6, 0.42))
+      drop-shadow(0 5px 9px rgba(21, 12, 6, 0.32));
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .guarantee-grid.reveal .seal img { opacity: 1; }
+  .guarantee-grid.is-visible .seal img { animation: none; }
 }
 
 /* eyebrow legível no fundo creme (a variante -strong é feita p/ fundo escuro) */
