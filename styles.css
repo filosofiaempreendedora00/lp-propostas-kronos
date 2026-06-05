@@ -1299,6 +1299,15 @@ em { font-style: italic; }
   max-width: 52ch;
 }
 .guarantee-text strong { font-weight: 600; color: var(--onix); }
+.guarantee-text a {
+  color: var(--onix);
+  font-weight: 500;
+  text-decoration: underline;
+  text-decoration-color: var(--areia);
+  text-underline-offset: 3px;
+  transition: text-decoration-color 0.3s var(--ease);
+}
+.guarantee-text a:hover { text-decoration-color: var(--sepia); }
 
 /* pontos de tranquilidade — ícone de precisão da marca */
 .guarantee-points {
@@ -1356,47 +1365,71 @@ em { font-style: italic; }
 /* ============================================================
    8. FAQ
    ============================================================ */
-.faq-list { max-width: 780px; position: relative; z-index: 2; }
-.faq-item { border-bottom: 1px solid var(--areia-14); }
+.section-faq .section-head { text-align: center; }
+.section-faq .section-head .hand-divider { margin-inline: auto; }
+
+.faq-list {
+  max-width: 760px;
+  margin-inline: auto;
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+.faq-item {
+  border: 1px solid var(--areia-14);
+  border-radius: 12px;
+  background: rgba(21, 12, 6, 0.22);
+  transition: border-color 0.35s var(--ease), background 0.35s var(--ease);
+}
+.faq-item:hover { border-color: var(--areia-30); }
+.faq-item[open] { border-color: var(--areia-30); background: rgba(21, 12, 6, 0.36); }
 .faq-item summary {
   list-style: none;
   cursor: pointer;
-  padding: 1.6rem 2.6rem 1.6rem 0;
+  padding: 1.35rem 3.4rem 1.35rem 1.6rem;
   position: relative;
   font-family: var(--serif);
   font-weight: 500;
-  font-size: clamp(1.3rem, 2.4vw, 1.7rem);
+  font-size: clamp(1.12rem, 2vw, 1.42rem);
+  line-height: 1.25;
   color: var(--creme);
   transition: color 0.3s var(--ease);
 }
 .faq-item summary::-webkit-details-marker { display: none; }
 .faq-item summary:hover { color: var(--areia); }
+/* indicador: ponteiro da marca, gira como mão de relógio ao abrir */
 .faq-item summary::after {
   content: "";
   position: absolute;
-  right: 0.4rem; top: 50%;
-  width: 16px; height: 1.5px;
+  right: 1.5rem; top: 50%;
+  width: 12px; height: 27px;
   background: var(--areia);
-  transform: translateY(-50%);
-  transition: transform 0.4s var(--ease);
+  -webkit-mask: url("assets/kronos-ponteiro.png") center / contain no-repeat;
+  mask: url("assets/kronos-ponteiro.png") center / contain no-repeat;
+  transform: translateY(-50%) rotate(180deg);
+  transform-origin: 50% 50%;
+  transition: transform 0.55s var(--ease-out), background 0.3s var(--ease);
 }
-.faq-item summary::before {
-  content: "";
-  position: absolute;
-  right: 1.15rem; top: 50%;
-  width: 1.5px; height: 16px;
-  background: var(--areia);
-  transform: translateY(-50%) scaleY(1);
-  transition: transform 0.4s var(--ease);
-}
-.faq-item[open] summary::before { transform: translateY(-50%) scaleY(0) rotate(90deg); }
+.faq-item summary:hover::after { background: var(--creme); }
+.faq-item[open] summary::after { transform: translateY(-50%) rotate(360deg); }
 .faq-item[open] summary { color: var(--creme); }
 .faq-answer {
-  padding: 0 2.6rem 1.8rem 0;
+  padding: 0 3.4rem 1.5rem 1.6rem;
   color: var(--areia);
   font-weight: 300;
-  max-width: 60ch;
+  line-height: 1.55;
+  max-width: 62ch;
 }
+.faq-answer a {
+  color: var(--creme);
+  text-decoration: underline;
+  text-decoration-color: var(--areia-45);
+  text-underline-offset: 3px;
+  transition: text-decoration-color 0.3s var(--ease);
+}
+.faq-answer a:hover { text-decoration-color: var(--areia); }
 .faq-item[open] .faq-answer { animation: faqIn 0.45s var(--ease-out); }
 @keyframes faqIn {
   from { opacity: 0; transform: translateY(-8px); }
