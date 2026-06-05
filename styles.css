@@ -1408,12 +1408,14 @@ em { font-style: italic; }
   background: var(--areia);
   -webkit-mask: url("assets/kronos-ponteiro.png") center / contain no-repeat;
   mask: url("assets/kronos-ponteiro.png") center / contain no-repeat;
-  transform: translateY(-50%) rotate(180deg);
+  /* fechado: aponta pro texto (esquerda) */
+  transform: translateY(-50%) rotate(-90deg);
   transform-origin: 50% 50%;
-  transition: transform 0.55s var(--ease-out), background 0.3s var(--ease);
+  transition: transform 0.5s var(--ease-out), background 0.3s var(--ease);
 }
 .faq-item summary:hover::after { background: var(--creme); }
-.faq-item[open] summary::after { transform: translateY(-50%) rotate(360deg); }
+/* aberto: gira 90° (aponta pra baixo, em direção à resposta) */
+.faq-item[open] summary::after { transform: translateY(-50%) rotate(-180deg); }
 .faq-item[open] summary { color: var(--creme); }
 .faq-answer {
   padding: 0 3.4rem 1.5rem 1.6rem;
