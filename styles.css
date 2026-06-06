@@ -1497,12 +1497,15 @@ em { font-style: italic; }
 }
 .section-final .btn { margin-top: 2.7rem; }
 .final-sub-2 { margin-top: 0.9rem; }
+.final-sub em { font-style: normal; color: var(--areia); font-weight: 600; }
 .final-cta { text-transform: uppercase; letter-spacing: 0.12em; font-weight: 600; }
 .final-guarantee {
-  margin-top: 1.5rem;
+  margin: 1.5rem auto 0;
+  max-width: 50ch;
   font-size: 0.9rem;
   color: var(--areia);
   opacity: 0.78;
+  text-wrap: balance;
 }
 
 /* ---------- Relógio do CTA final: ponteiros da marca acelerados (urgência) ---------- */
