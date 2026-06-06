@@ -1128,7 +1128,7 @@ em { font-style: italic; }
 }
 .plan-period { color: var(--areia); font-size: 0.95rem; }
 .plan-featured .plan-period { color: var(--sepia); }
-.plan-annual-note { margin-top: 0.6rem; font-size: 0.82rem; color: var(--areia); }
+.plan-annual-note { margin-top: 0.6rem; font-size: 0.75rem; color: var(--areia); white-space: nowrap; letter-spacing: -0.005em; }
 .plan-featured .plan-annual-note { color: var(--sepia); opacity: 0.78; }
 .plan-feats {
   margin-top: 1.9rem;
