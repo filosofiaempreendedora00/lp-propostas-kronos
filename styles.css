@@ -1480,24 +1480,24 @@ em { font-style: italic; }
   margin-bottom: 1.3rem;
 }
 .final-title {
-  font-size: clamp(2.45rem, 5.8vw, 4.3rem);
-  line-height: 1.04;
-  letter-spacing: -0.012em;
+  font-size: clamp(2.8rem, 6.8vw, 5.2rem);
+  line-height: 1.02;
+  letter-spacing: -0.014em;
   text-wrap: balance;
 }
 .final-title em { color: var(--areia); }
 .final-sub {
-  margin: 1.7rem auto 0;
-  max-width: 36ch;
+  margin: 1.6rem auto 0;
+  max-width: 38ch;
   color: var(--creme);
-  opacity: 0.9;
-  font-size: clamp(1.12rem, 1.7vw, 1.34rem);
+  opacity: 0.88;
+  font-size: clamp(1.04rem, 1.3vw, 1.16rem);
   line-height: 1.5;
   text-wrap: balance;
 }
 .section-final .btn { margin-top: 2.7rem; }
 .final-sub-2 { margin-top: 0.9rem; }
-.final-sub em { font-style: normal; color: var(--areia); font-weight: 600; }
+.final-sub em { font-style: italic; color: var(--areia); font-weight: 400; }
 .final-cta { text-transform: uppercase; letter-spacing: 0.12em; font-weight: 600; }
 .final-guarantee {
   margin: 1.5rem auto 0;
