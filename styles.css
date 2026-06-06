@@ -1823,3 +1823,43 @@ html.kp-protect .selectable {
 @media (prefers-reduced-motion: reduce) {
   .kp-toast { transition: opacity 0.2s linear; }
 }
+
+/* ============================================================
+   WIDGET FLUTUANTE DE WHATSAPP
+   ============================================================ */
+.wa-float {
+  position: fixed;
+  right: clamp(16px, 3vw, 26px);
+  bottom: clamp(16px, 3vw, 26px);
+  z-index: 9990;
+  width: 56px;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: #25d366;
+  color: #fff;
+  box-shadow: 0 12px 30px -10px rgba(0, 0, 0, 0.5);
+  transition: transform 0.3s var(--ease-out), box-shadow 0.3s var(--ease);
+}
+.wa-float svg { width: 62%; height: 62%; fill: currentColor; display: block; }
+.wa-float:hover { transform: translateY(-3px) scale(1.05); box-shadow: 0 18px 38px -12px rgba(0, 0, 0, 0.55); }
+.wa-float:active { transform: translateY(-1px) scale(1.0); }
+/* pulso discreto pra chamar atenção (no ::after, sem mexer na sombra do botão) */
+.wa-float::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.5);
+  animation: waPulse 2.8s ease-out infinite;
+  pointer-events: none;
+}
+@keyframes waPulse {
+  70%  { box-shadow: 0 0 0 13px rgba(37, 211, 102, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .wa-float::after { animation: none; }
+}
