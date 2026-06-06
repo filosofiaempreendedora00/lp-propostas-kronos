@@ -372,12 +372,12 @@
         var el = entry.target;
         io.unobserve(el);
         var target = parseFloat(el.getAttribute("data-count"));
-        var dur = 1700, t0 = null;
+        var dur = 2700, t0 = null;
         function tick(ts) {
           if (t0 === null) t0 = ts;
           var p = Math.min(1, (ts - t0) / dur);
-          // easeOutExpo
-          var e = p === 1 ? 1 : 1 - Math.pow(2, -10 * p);
+          // easeOutCubic — subida mais gradual e elegante
+          var e = 1 - Math.pow(1 - p, 3);
           el.textContent = fmt(el, target * e);
           if (p < 1) requestAnimationFrame(tick);
         }
