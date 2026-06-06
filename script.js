@@ -462,6 +462,21 @@
     applyCheckout(); // estado inicial (mensal)
     document.querySelectorAll("[data-checkout]").forEach(function (link) {
       link.addEventListener("click", function (e) {
+        // Meta Pixel: intenção de compra (o Purchase em si vem da Kiwify)
+        if (typeof window.fbq === "function") {
+          var plan = link.getAttribute("data-checkout");
+          var planEl = link.closest(".plan");
+          var amtEl = planEl && planEl.querySelector(".plan-amount");
+          var val = amtEl ? parseFloat(String(amtEl.textContent).replace(/\./g, "").replace(",", ".")) : NaN;
+          var params = {
+            content_name: plan === "individual" ? "Plano Individual" : "Plano Time",
+            content_category: "plano",
+            content_ids: [plan + "-" + billingMode],
+            currency: "BRL"
+          };
+          if (!isNaN(val)) params.value = val;
+          fbq("track", "InitiateCheckout", params);
+        }
         var href = link.getAttribute("href");
         if (!href || href === "#") {
           e.preventDefault();
