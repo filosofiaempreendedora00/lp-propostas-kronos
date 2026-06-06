@@ -1469,11 +1469,39 @@ em { font-style: italic; }
 }
 .final-bg { position: absolute; inset: 0; z-index: 0; }
 .final-bg .vortex { opacity: 0.7; }
-.final-inner { max-width: 800px; margin-inline: auto; position: relative; z-index: 3; }
-.final-title { font-size: clamp(2.2rem, 5vw, 3.7rem); letter-spacing: -0.005em; }
+.final-inner { max-width: 860px; margin-inline: auto; position: relative; z-index: 3; }
+.final-kicker {
+  display: inline-block;
+  font-family: var(--sans);
+  font-size: 0.78rem;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: var(--areia);
+  margin-bottom: 1.3rem;
+}
+.final-title {
+  font-size: clamp(2.45rem, 5.8vw, 4.3rem);
+  line-height: 1.04;
+  letter-spacing: -0.012em;
+  text-wrap: balance;
+}
 .final-title em { color: var(--areia); }
-.final-sub { margin-top: 1.5rem; color: var(--areia); font-size: 1.12rem; }
+.final-sub {
+  margin: 1.7rem auto 0;
+  max-width: 36ch;
+  color: var(--creme);
+  opacity: 0.9;
+  font-size: clamp(1.12rem, 1.7vw, 1.34rem);
+  line-height: 1.5;
+  text-wrap: balance;
+}
 .section-final .btn { margin-top: 2.7rem; }
+.final-guarantee {
+  margin-top: 1.5rem;
+  font-size: 0.9rem;
+  color: var(--areia);
+  opacity: 0.78;
+}
 
 /* ---------- Relógio do CTA final: ponteiros da marca acelerados (urgência) ---------- */
 .clock {
