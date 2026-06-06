@@ -398,6 +398,30 @@
     window.addEventListener("scroll", onScroll, { passive: true });
   }
 
+  /* ---------- Checkout (Kiwify) — 1 link por plano e periodicidade ---------- */
+  var CHECKOUT_URL = {
+    individual: {
+      monthly: "https://pay.kiwify.com.br/HZzahV5",
+      annual:  "https://pay.kiwify.com.br/vaYLMVx"
+    },
+    time: {
+      monthly: "https://pay.kiwify.com.br/Fa0RNiT",
+      annual:  "https://pay.kiwify.com.br/3gsFJ9E"
+    }
+  };
+  var billingMode = "monthly";
+  function applyCheckout() {
+    document.querySelectorAll("[data-checkout]").forEach(function (link) {
+      var plan = link.getAttribute("data-checkout");
+      var url = CHECKOUT_URL[plan] && CHECKOUT_URL[plan][billingMode];
+      if (url) {
+        link.setAttribute("href", url);
+        link.setAttribute("target", "_blank");
+        link.setAttribute("rel", "noopener");
+      }
+    });
+  }
+
   function initBilling() {
     var toggle = document.querySelector(".billing-toggle");
     var btns = document.querySelectorAll(".billing-opt");
@@ -406,6 +430,7 @@
     if (!toggle) return;
 
     function set(mode) {
+      billingMode = mode;
       var annual = mode === "annual";
       toggle.classList.toggle("is-annual", annual);
       btns.forEach(function (b) {
@@ -416,6 +441,7 @@
         if (val) a.textContent = val;
       });
       notes.forEach(function (n) { n.hidden = !annual; });
+      applyCheckout();
     }
     btns.forEach(function (btn) {
       btn.addEventListener("click", function () { set(btn.getAttribute("data-billing")); });
@@ -433,25 +459,15 @@
   }
 
   function initCheckout() {
-    // PLACEHOLDER: cole aqui a URL de checkout de cada plano.
-    // Enquanto vazias, os botões abrem o link âncora #planos (não quebram).
-    var CHECKOUT_URL = {
-      individual: "", // PLACEHOLDER — link de checkout do plano Individual
-      time:       ""  // PLACEHOLDER — link de checkout do plano Time
-    };
+    applyCheckout(); // estado inicial (mensal)
     document.querySelectorAll("[data-checkout]").forEach(function (link) {
-      var plan = link.getAttribute("data-checkout");
-      var url = CHECKOUT_URL[plan];
-      if (url) {
-        link.setAttribute("href", url);
-        link.setAttribute("target", "_blank");
-        link.setAttribute("rel", "noopener");
-        return;
-      }
       link.addEventListener("click", function (e) {
-        e.preventDefault();
-        var planos = document.getElementById("planos");
-        if (planos) planos.scrollIntoView({ behavior: "smooth" });
+        var href = link.getAttribute("href");
+        if (!href || href === "#") {
+          e.preventDefault();
+          var planos = document.getElementById("planos");
+          if (planos) planos.scrollIntoView({ behavior: "smooth" });
+        }
       });
     });
   }
