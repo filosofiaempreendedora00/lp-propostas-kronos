@@ -843,6 +843,8 @@ em { font-style: italic; }
   z-index: 2;
 }
 .method-block {
+  position: relative;
+  overflow: hidden;
   display: flex;
   flex-direction: column;
   padding: 1.7rem 1.6rem 1.8rem;
@@ -852,6 +854,19 @@ em { font-style: italic; }
   box-shadow: var(--shadow-card);
   transition: transform 0.5s var(--ease-out), border-color 0.5s var(--ease);
 }
+/* textura de areia (grão fino) em cada card da metodologia */
+.method-block::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-image: var(--grain);
+  background-size: 170px 170px;
+  opacity: 0.11;
+  mix-blend-mode: overlay;
+}
+.method-block > * { position: relative; z-index: 1; }
 .method-block:hover { transform: translateY(-5px); border-color: var(--areia-30); }
 .mb-num {
   font-family: var(--serif);
