@@ -1496,6 +1496,8 @@ em { font-style: italic; }
   text-wrap: balance;
 }
 .section-final .btn { margin-top: 2.7rem; }
+.final-sub-2 { margin-top: 0.9rem; }
+.final-cta { text-transform: uppercase; letter-spacing: 0.12em; font-weight: 600; }
 .final-guarantee {
   margin-top: 1.5rem;
   font-size: 0.9rem;
