@@ -577,6 +577,25 @@
     } else { start(); }
   }
 
+  /* ---------- Vídeos dos passos: lazy (só baixam/tocam perto da viewport) ---------- */
+  function initStepVideos() {
+    var vids = document.querySelectorAll(".step-vid");
+    if (!vids.length) return;
+    function play(v) { var p = v.play(); if (p && p.catch) p.catch(function () {}); }
+    if (!("IntersectionObserver" in window)) {
+      vids.forEach(play);
+      return;
+    }
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        var v = e.target;
+        if (e.isIntersecting) play(v);
+        else if (!v.paused) v.pause();
+      });
+    }, { rootMargin: "300px 0px", threshold: 0.01 });
+    vids.forEach(function (v) { io.observe(v); });
+  }
+
   function boot() {
     initHeader();
     initReveal();
@@ -585,6 +604,7 @@
     initBilling();
     initFAQ();
     initCheckout();
+    initStepVideos();
     initYear();
 
     document.querySelectorAll(".vortex").forEach(function (c) { Vortex(c); });

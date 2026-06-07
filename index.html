@@ -18,6 +18,9 @@
   <!-- Fonts: Cormorant Garamond (display) + Instrument Sans (UI) -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <!-- acelera o handshake com os serviços de terceiros (analytics/pixel) -->
+  <link rel="preconnect" href="https://www.clarity.ms" />
+  <link rel="preconnect" href="https://connect.facebook.net" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500;1,600&family=Instrument+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
 
   <link rel="stylesheet" href="styles.css" />
@@ -68,7 +71,7 @@
   <header class="site-header" id="top">
     <div class="container header-inner">
       <a href="#top" class="brand" aria-label="KRONOS — início">
-        <img src="assets/kronos-logo.png" alt="KRONOS" class="brand-logo" />
+        <img src="assets/kronos-logo.png" alt="KRONOS" class="brand-logo" width="899" height="267" decoding="async" fetchpriority="high" />
       </a>
     </div>
   </header>
@@ -242,7 +245,7 @@
         <li class="step reveal" data-reveal-delay="0">
           <span class="step-num">1</span>
           <div class="step-media has-media">
-            <video class="step-vid" autoplay loop muted playsinline preload="auto"
+            <video class="step-vid" loop muted playsinline preload="none"
                    aria-label="Cadastro da empresa na Kronos">
               <source src="gifs/kronos-1-cadastre-empresa.webm" type="video/webm" />
             </video>
@@ -255,7 +258,7 @@
         <li class="step reveal" data-reveal-delay="90">
           <span class="step-num">2</span>
           <div class="step-media has-media">
-            <video class="step-vid" autoplay loop muted playsinline preload="auto"
+            <video class="step-vid" loop muted playsinline preload="none"
                    aria-label="Escolha das seções da proposta na Kronos">
               <source src="gifs/kronos-2-escolha-secoes.webm" type="video/webm" />
             </video>
@@ -268,7 +271,7 @@
         <li class="step reveal" data-reveal-delay="180">
           <span class="step-num">3</span>
           <div class="step-media has-media">
-            <video class="step-vid" autoplay loop muted playsinline preload="auto"
+            <video class="step-vid" loop muted playsinline preload="none"
                    aria-label="Geração da proposta com a identidade visual do cliente">
               <source src="gifs/kronos-3-gere-cara-cliente.webm" type="video/webm" />
             </video>
@@ -620,7 +623,7 @@
     <div class="container guarantee-grid reveal">
       <div class="guarantee-seal">
         <span class="seal">
-          <img src="assets/selo-kronos.webp" width="987" height="1000"
+          <img src="assets/selo-kronos.webp" width="987" height="1000" loading="lazy" decoding="async"
                alt="Selo Kronos de Qualidade — Garantia incondicional de 7 dias" />
         </span>
       </div>
