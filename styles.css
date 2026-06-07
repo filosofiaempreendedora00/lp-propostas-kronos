@@ -334,13 +334,13 @@ em { font-style: italic; }
 /* Texturas de areia reais da marca (uso contido nas seções escuras) */
 .tex-sand-sepia {
   background-color: var(--sepia);
-  background-image: url("assets/tex-areia-sepia.jpg");
+  background-image: url("assets/tex-areia-sepia.webp");
   background-size: cover;
   background-position: center;
 }
 .tex-sand-onix {
   background-color: var(--onix);
-  background-image: url("assets/tex-areia-onix.jpg");
+  background-image: url("assets/tex-areia-onix.webp");
   background-size: cover;
   background-position: center;
 }
