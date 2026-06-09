@@ -25,8 +25,8 @@
 
 ### 1. HERO
 - **Tag (pílula com emoji 💼):** GERADOR DE PROPOSTAS DA KRONOS
-- **H1:** "Gere propostas comerciais matadoras & sob medida com IA: *em 60s.*"
-- **Subheadline:** "Feche mais negócios falando exatamente o que cada cliente quer ouvir: a IA personaliza a proposta inteira, e você só precisa enviar."
+- **H1:** "Propostas que o cliente responde — *prontas em 60 segundos.*"
+- **Subheadline:** "A IA escreve cada proposta com a dor exata do seu cliente. Você só revisa e envia."
 - **Sem botão no hero** (decisão: hero contemplativo; o "scroll cue" convida a descer).
 - **Fundo:** vórtice/ciclone animado (canvas) — o "tornado" da marca, dourado sobre ônix.
 
