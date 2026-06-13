@@ -283,6 +283,57 @@
     </div>
   </section>
 
+  <!-- ===================== 4b. GALERIA DE PROPOSTAS ===================== -->
+  <section class="section section-gallery tex-sand-onix" id="propostas">
+    <div class="container">
+      <div class="section-head reveal">
+        <span class="hand-divider" aria-hidden="true"></span>
+        <h2 class="section-title">Propostas reais. <em>Geradas em 60 segundos.</em></h2>
+        <p class="section-lead">Exemplos de mercados diferentes — veja o nível do que a Kronos entrega.</p>
+      </div>
+
+      <div class="gallery reveal">
+        <button class="gal-arrow gal-prev" type="button" aria-label="Proposta anterior" hidden>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 4 7 12l8 8"/></svg>
+        </button>
+
+        <div class="gal-track" id="gal-track">
+          <article class="gal-card" data-pdf="propostas/proposta-engenharia.pdf" data-title="Proposta de Engenharia · Kronos">
+            <div class="gal-cover" role="button" tabindex="0" aria-label="Abrir a proposta de Engenharia">
+              <span class="gal-market">Engenharia</span>
+              <img src="assets/cover-engenharia.webp" width="720" height="1019" loading="lazy" decoding="async" alt="Capa de uma proposta comercial de engenharia gerada pela Kronos" />
+            </div>
+            <button class="btn btn-ghost btn-sm gal-open" type="button">Ver proposta completa</button>
+          </article>
+
+          <article class="gal-card" data-pdf="propostas/proposta-imobiliario.pdf" data-title="Proposta Imobiliária · Kronos">
+            <div class="gal-cover" role="button" tabindex="0" aria-label="Abrir a proposta Imobiliária">
+              <span class="gal-market">Imobiliário</span>
+              <img src="assets/cover-imobiliario.webp" width="720" height="1019" loading="lazy" decoding="async" alt="Capa de uma proposta comercial imobiliária gerada pela Kronos" />
+            </div>
+            <button class="btn btn-ghost btn-sm gal-open" type="button">Ver proposta completa</button>
+          </article>
+
+          <article class="gal-card" data-pdf="propostas/proposta-marketing.pdf" data-title="Proposta de Marketing · Kronos">
+            <div class="gal-cover" role="button" tabindex="0" aria-label="Abrir a proposta de Marketing">
+              <span class="gal-market">Marketing</span>
+              <img src="assets/cover-marketing.webp" width="720" height="1019" loading="lazy" decoding="async" alt="Capa de uma proposta comercial de marketing gerada pela Kronos" />
+            </div>
+            <button class="btn btn-ghost btn-sm gal-open" type="button">Ver proposta completa</button>
+          </article>
+        </div>
+
+        <button class="gal-arrow gal-next" type="button" aria-label="Próxima proposta" hidden>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 4l8 8-8 8"/></svg>
+        </button>
+      </div>
+
+      <div class="gallery-cta reveal">
+        <a href="#planos" class="btn btn-primary btn-lg">Crie a sua em 60 segundos</a>
+      </div>
+    </div>
+  </section>
+
   <!-- ===================== 5. O QUE VOCÊ GANHA ===================== -->
   <section class="section section-gains section-light has-grain" id="ganhos">
     <div class="container">
@@ -903,6 +954,22 @@
       <p class="footer-legal">© <span id="year"></span> KRONOS. Mover o ponteiro.</p>
     </div>
   </footer>
+
+  <!-- Visualizador de proposta (PDF) — overlay em tela cheia -->
+  <div class="gal-modal" id="gal-modal" role="dialog" aria-modal="true" aria-label="Visualizador de proposta" hidden>
+    <div class="gal-modal-backdrop" data-gal-close></div>
+    <div class="gal-modal-panel">
+      <div class="gal-modal-bar">
+        <span class="gal-modal-title" id="gal-modal-title">Proposta</span>
+        <button class="gal-modal-close" type="button" aria-label="Fechar visualizador" data-gal-close>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6 18 18 M18 6 6 18"/></svg>
+        </button>
+      </div>
+      <div class="gal-modal-scroll" id="gal-modal-scroll">
+        <div class="gal-modal-status" id="gal-modal-status">Carregando proposta…</div>
+      </div>
+    </div>
+  </div>
 
   <!-- Widget flutuante de WhatsApp -->
   <a class="wa-float" href="https://wa.me/5527998001953?text=Ol%C3%A1!%20Vim%20pela%20p%C3%A1gina%20do%20Gerador%20de%20Propostas%20da%20Kronos%20e%20quero%20saber%20mais."

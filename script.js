@@ -596,6 +596,148 @@
     vids.forEach(function (v) { io.observe(v); });
   }
 
+  /* ---------- Galeria de propostas: carrossel + visualizador de PDF ---------- */
+  var _pdfjs = null;
+  var _renderToken = 0;
+  function loadPdfjs() {
+    if (_pdfjs) return _pdfjs;
+    var base = "https://cdn.jsdelivr.net/npm/pdfjs-dist@4.2.67/build/";
+    _pdfjs = import(base + "pdf.min.mjs").then(function (mod) {
+      mod.GlobalWorkerOptions.workerSrc = base + "pdf.worker.min.mjs";
+      return mod;
+    });
+    return _pdfjs;
+  }
+
+  function galRenderPage(el, dpr, token) {
+    if (el._rendered || el._rendering) return;
+    el._rendering = true;
+    var page = el._page;
+    var cssW = el.clientWidth || 700;
+    var vp1 = page.getViewport({ scale: 1 });
+    var vp = page.getViewport({ scale: (cssW * dpr) / vp1.width });
+    var canvas = document.createElement("canvas");
+    canvas.width = Math.round(vp.width);
+    canvas.height = Math.round(vp.height);
+    el.appendChild(canvas);
+    var task = page.render({ canvasContext: canvas.getContext("2d"), viewport: vp });
+    el._task = task;
+    task.promise.then(function () {
+      if (token !== _renderToken) return;
+      el._rendered = true; el._rendering = false;
+    }).catch(function () { el._rendering = false; });
+  }
+  function galUnrenderPage(el) {
+    if (el._task) { try { el._task.cancel(); } catch (e) {} el._task = null; }
+    if (el.firstChild) { el.innerHTML = ""; }
+    el._rendered = false; el._rendering = false;
+  }
+
+  function galOpen(url, title) {
+    var modal = document.getElementById("gal-modal");
+    var scroll = document.getElementById("gal-modal-scroll");
+    document.getElementById("gal-modal-title").textContent = title || "Proposta";
+    scroll.innerHTML = '<div class="gal-modal-status">Carregando proposta…</div>';
+    scroll.scrollTop = 0;
+    modal.hidden = false;
+    document.body.classList.add("gal-locked");
+    var token = ++_renderToken;
+
+    loadPdfjs()
+      .then(function (pdfjs) { return pdfjs.getDocument(url).promise; })
+      .then(function (doc) {
+        if (token !== _renderToken) return;
+        var jobs = [];
+        for (var i = 1; i <= doc.numPages; i++) jobs.push(doc.getPage(i));
+        return Promise.all(jobs).then(function (pages) {
+          if (token !== _renderToken) return;
+          scroll.innerHTML = "";
+          var dpr = Math.min(window.devicePixelRatio || 1, 2);
+          var els = pages.map(function (page) {
+            var vp = page.getViewport({ scale: 1 });
+            var el = document.createElement("div");
+            el.className = "gal-page";
+            el.style.aspectRatio = vp.width + " / " + vp.height;
+            el._page = page;
+            scroll.appendChild(el);
+            return el;
+          });
+          if ("IntersectionObserver" in window) {
+            var io = new IntersectionObserver(function (entries) {
+              entries.forEach(function (e) {
+                if (e.isIntersecting) galRenderPage(e.target, dpr, token);
+                else galUnrenderPage(e.target);
+              });
+            }, { root: scroll, rootMargin: "160% 0px" });
+            els.forEach(function (el) { io.observe(el); });
+            scroll._io = io;
+          } else {
+            els.forEach(function (el) { galRenderPage(el, dpr, token); });
+          }
+        });
+      })
+      .catch(function () {
+        if (token !== _renderToken) return;
+        scroll.innerHTML = '<div class="gal-modal-status">Não consegui carregar a proposta agora. Tente novamente.</div>';
+      });
+  }
+  function galClose() {
+    var modal = document.getElementById("gal-modal");
+    var scroll = document.getElementById("gal-modal-scroll");
+    _renderToken++;
+    if (scroll._io) { try { scroll._io.disconnect(); } catch (e) {} scroll._io = null; }
+    scroll.innerHTML = "";
+    modal.hidden = true;
+    document.body.classList.remove("gal-locked");
+  }
+
+  function initGallery() {
+    var track = document.getElementById("gal-track");
+    if (!track) return;
+    var prev = document.querySelector(".gal-prev");
+    var next = document.querySelector(".gal-next");
+
+    function step() {
+      var card = track.querySelector(".gal-card");
+      var gap = parseFloat(getComputedStyle(track).gap) || 16;
+      return (card ? card.getBoundingClientRect().width : track.clientWidth * 0.8) + gap;
+    }
+    function updateArrows() {
+      var max = track.scrollWidth - track.clientWidth - 2;
+      var scrollable = max > 4;
+      if (prev) { prev.hidden = !scrollable; prev.disabled = track.scrollLeft <= 2; }
+      if (next) { next.hidden = !scrollable; next.disabled = track.scrollLeft >= max; }
+    }
+    if (prev) prev.addEventListener("click", function () { track.scrollBy({ left: -step(), behavior: "smooth" }); });
+    if (next) next.addEventListener("click", function () { track.scrollBy({ left: step(), behavior: "smooth" }); });
+    track.addEventListener("scroll", function () { updateArrows(); }, { passive: true });
+    window.addEventListener("resize", debounce(updateArrows, 150));
+    updateArrows();
+
+    track.querySelectorAll(".gal-card").forEach(function (card) {
+      var open = function () { galOpen(card.getAttribute("data-pdf"), card.getAttribute("data-title")); };
+      var cover = card.querySelector(".gal-cover");
+      var btn = card.querySelector(".gal-open");
+      if (cover) {
+        cover.addEventListener("click", open);
+        cover.addEventListener("keydown", function (e) {
+          if (e.key === "Enter" || e.key === " ") { e.preventDefault(); open(); }
+        });
+      }
+      if (btn) btn.addEventListener("click", function (e) { e.stopPropagation(); open(); });
+    });
+
+    var modal = document.getElementById("gal-modal");
+    if (modal) {
+      modal.querySelectorAll("[data-gal-close]").forEach(function (el) {
+        el.addEventListener("click", galClose);
+      });
+      document.addEventListener("keydown", function (e) {
+        if (e.key === "Escape" && !modal.hidden) galClose();
+      });
+    }
+  }
+
   function boot() {
     initHeader();
     initReveal();
@@ -605,6 +747,7 @@
     initFAQ();
     initCheckout();
     initStepVideos();
+    initGallery();
     initYear();
 
     document.querySelectorAll(".vortex").forEach(function (c) { Vortex(c); });

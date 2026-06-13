@@ -56,6 +56,17 @@
 - **Passo 3 — Gere com a cara do cliente:** "Em 60 segundos a proposta personalizada sai pronta — na identidade visual do seu cliente." (vídeo: geração com a marca do cliente)
 - **Mídia:** cada passo tem um **vídeo .webm** real do produto (1200×800), autoplay/loop/mudo, com moldura dourada. (Carregam de forma lazy — só ao entrar na viewport.)
 
+### 5b. GALERIA DE PROPOSTAS (prova/portfólio) — vem logo após "Como funciona"
+- **H2:** "Propostas reais. *Geradas em 60 segundos.*"
+- **Subtítulo:** "Exemplos de mercados diferentes — veja o nível do que a Kronos entrega."
+- **Carrossel** (swipe no mobile, setas no desktop) com 3 propostas reais, uma por mercado:
+  - **Engenharia** (Voltec — Engenharia Elétrica Industrial)
+  - **Imobiliário** (Vértice — Apresentação de Imóvel)
+  - **Marketing** (Tração — Crescimento Digital)
+- Cada card: capa (1ª página do PDF) + rótulo do mercado + botão "Ver proposta completa".
+- Ao clicar, o **PDF abre dentro da página** (modal/overlay em tela cheia, rolável, com botão de fechar). Renderização via PDF.js carregado sob demanda; capas leves (WebP) e PDFs só baixam quando abertos (não pesam o load inicial).
+- **CTA ao final:** "Crie a sua em 60 segundos" → âncora `#planos`.
+
 ### 6. O QUE VOCÊ GANHA — Comparativo "Sua vida *mil vezes* mais fácil com a Kronos."
 - **Lead:** "De um lado, a correria de sempre. Do outro, a Kronos."
 - **Tabela (No processo manual ✗ | Com a Kronos ✓):**
@@ -147,6 +158,7 @@
 | Onde | Texto | Destino |
 |---|---|---|
 | Virada | Entenda como funciona | âncora `#como-funciona` |
+| Galeria de propostas | Crie a sua em 60 segundos | âncora `#planos` |
 | Planos · Individual | Assinar Individual | Checkout Kiwify (ver tabela abaixo) |
 | Planos · Time | Assinar Time | Checkout Kiwify (ver tabela abaixo) |
 | Garantia | Começar sem risco | âncora `#planos` |
