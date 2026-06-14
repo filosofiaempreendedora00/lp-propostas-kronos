@@ -1981,6 +1981,100 @@ html.kp-protect .selectable {
   margin-top: clamp(1.7rem, 3vw, 2.4rem);
 }
 
+/* ---------- Depoimentos em vídeo ---------- */
+.section-testimonials {
+  padding-top: clamp(2rem, 4.5vw, 4rem);
+}
+.section-testimonials .section-head {
+  margin-bottom: clamp(2.2rem, 4vw, 3.2rem);
+}
+.vt-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: clamp(1.1rem, 2.4vw, 1.9rem);
+  max-width: 1000px;
+  margin: 0 auto;
+}
+.vt-embed {
+  position: relative;
+  margin: 0;
+  aspect-ratio: 16 / 9;
+  border-radius: 14px;
+  overflow: hidden;
+  background: #0c0703;
+  border: 1px solid var(--areia-20);
+  box-shadow: 0 18px 44px -28px rgba(0, 0, 0, 0.75);
+}
+.vt-play-area {
+  display: block;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+}
+.vt-thumb {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.55s ease;
+}
+.vt-embed::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at center, rgba(0, 0, 0, 0.12), rgba(0, 0, 0, 0.42));
+  pointer-events: none;
+  transition: opacity 0.4s ease;
+}
+.vt-play-area:hover .vt-thumb { transform: scale(1.045); }
+.vt-play {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: var(--areia);
+  box-shadow: 0 10px 26px -8px rgba(0, 0, 0, 0.65);
+  transition: transform 0.3s ease, background 0.3s ease;
+  z-index: 2;
+  pointer-events: none;
+}
+.vt-play svg {
+  width: 28px;
+  height: 28px;
+  fill: var(--onix);
+  margin-left: 3px;
+}
+.vt-play-area:hover .vt-play {
+  transform: translate(-50%, -50%) scale(1.08);
+  background: var(--creme);
+}
+.vt-play-area:focus-visible {
+  outline: 2px solid var(--areia);
+  outline-offset: 3px;
+}
+.vt-embed.is-playing::after { opacity: 0; }
+.vt-embed iframe {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+@media (max-width: 760px) {
+  .vt-grid {
+    grid-template-columns: 1fr;
+    max-width: 520px;
+    gap: 1.1rem;
+  }
+}
+
 /* ---------- Visualizador de PDF (modal/overlay tela cheia) ---------- */
 body.gal-locked { overflow: hidden; }
 .gal-modal {

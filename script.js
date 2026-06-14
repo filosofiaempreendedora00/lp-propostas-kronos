@@ -726,6 +726,40 @@
     }
   }
 
+  function initVideoTestimonials() {
+    document.querySelectorAll(".lite-yt").forEach(function (box) {
+      var id = box.getAttribute("data-yt");
+      if (!id) return;
+
+      // Capa: tenta maxresdefault (16:9 real); se faltar, cai pra hqdefault.
+      var thumb = box.querySelector(".vt-thumb");
+      if (thumb) {
+        thumb.addEventListener("error", function () {
+          if (thumb.src.indexOf("maxresdefault") !== -1) {
+            thumb.src = "https://i.ytimg.com/vi/" + id + "/hqdefault.jpg";
+          }
+        });
+      }
+
+      var area = box.querySelector(".vt-play-area");
+      if (!area) return;
+      area.addEventListener("click", function () {
+        if (box.classList.contains("is-playing")) return;
+        var iframe = document.createElement("iframe");
+        iframe.src = "https://www.youtube-nocookie.com/embed/" + id +
+          "?autoplay=1&rel=0&modestbranding=1&playsinline=1";
+        iframe.title = "Depoimento em vídeo sobre a Kronos";
+        iframe.setAttribute("loading", "lazy");
+        iframe.setAttribute("allow",
+          "autoplay; encrypted-media; picture-in-picture; fullscreen");
+        iframe.setAttribute("allowfullscreen", "");
+        box.classList.add("is-playing");
+        box.innerHTML = "";
+        box.appendChild(iframe);
+      });
+    });
+  }
+
   function boot() {
     initHeader();
     initReveal();
@@ -736,6 +770,7 @@
     initCheckout();
     initStepVideos();
     initGallery();
+    initVideoTestimonials();
     initYear();
 
     document.querySelectorAll(".vortex").forEach(function (c) { Vortex(c); });
