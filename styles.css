@@ -1077,9 +1077,15 @@ em { font-style: italic; }
   letter-spacing: 0.02em;
   border: 1px solid rgba(168, 144, 112, 0.45);
 }
-.proof-id { display: flex; flex-direction: column; gap: 0.1rem; min-width: 0; }
-.proof-name { font-weight: 500; color: var(--onix); }
-.proof-role { font-size: 0.86rem; color: var(--areia); }
+.proof-id { display: flex; flex-direction: column; justify-content: center; min-width: 0; }
+.proof-name {
+  font-family: var(--serif);
+  font-weight: 600;
+  font-size: 1.32rem;
+  line-height: 1.15;
+  letter-spacing: 0.01em;
+  color: var(--onix);
+}
 
 /* ============================================================
    6. PLANOS
