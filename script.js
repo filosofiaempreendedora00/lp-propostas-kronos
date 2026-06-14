@@ -462,21 +462,8 @@
     applyCheckout(); // estado inicial (mensal)
     document.querySelectorAll("[data-checkout]").forEach(function (link) {
       link.addEventListener("click", function (e) {
-        // Meta Pixel: intenção de compra (o Purchase em si vem da Kiwify)
-        if (typeof window.fbq === "function") {
-          var plan = link.getAttribute("data-checkout");
-          var planEl = link.closest(".plan");
-          var amtEl = planEl && planEl.querySelector(".plan-amount");
-          var val = amtEl ? parseFloat(String(amtEl.textContent).replace(/\./g, "").replace(",", ".")) : NaN;
-          var params = {
-            content_name: plan === "individual" ? "Plano Individual" : "Plano Time",
-            content_category: "plano",
-            content_ids: [plan + "-" + billingMode],
-            currency: "BRL"
-          };
-          if (!isNaN(val)) params.value = val;
-          fbq("track", "InitiateCheckout", params);
-        }
+        // Nada de InitiateCheckout aqui: a Kiwify é a única fonte dos eventos
+        // de checkout/compra, pra evitar duplicacao no Gerenciador de Anuncios.
         var href = link.getAttribute("href");
         if (!href || href === "#") {
           e.preventDefault();
@@ -745,11 +732,13 @@
       if (!area) return;
       area.addEventListener("click", function () {
         if (box.classList.contains("is-playing")) return;
+        // iframe criado de forma SÍNCRONA dentro do clique (sem loading=lazy)
+        // pra preservar o gesto do usuário — é isso que libera o autoplay com
+        // som em 1 clique. Dominio padrao do YouTube (melhor politica de autoplay).
         var iframe = document.createElement("iframe");
-        iframe.src = "https://www.youtube-nocookie.com/embed/" + id +
+        iframe.src = "https://www.youtube.com/embed/" + id +
           "?autoplay=1&rel=0&modestbranding=1&playsinline=1";
         iframe.title = "Depoimento em vídeo sobre a Kronos";
-        iframe.setAttribute("loading", "lazy");
         iframe.setAttribute("allow",
           "autoplay; encrypted-media; picture-in-picture; fullscreen");
         iframe.setAttribute("allowfullscreen", "");
