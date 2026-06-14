@@ -609,30 +609,6 @@
     return _pdfjs;
   }
 
-  function galRenderPage(el, dpr, token) {
-    if (el._rendered || el._rendering) return;
-    el._rendering = true;
-    var page = el._page;
-    var cssW = el.clientWidth || 700;
-    var vp1 = page.getViewport({ scale: 1 });
-    var vp = page.getViewport({ scale: (cssW * dpr) / vp1.width });
-    var canvas = document.createElement("canvas");
-    canvas.width = Math.round(vp.width);
-    canvas.height = Math.round(vp.height);
-    el.appendChild(canvas);
-    var task = page.render({ canvasContext: canvas.getContext("2d"), viewport: vp });
-    el._task = task;
-    task.promise.then(function () {
-      if (token !== _renderToken) return;
-      el._rendered = true; el._rendering = false;
-    }).catch(function () { el._rendering = false; });
-  }
-  function galUnrenderPage(el) {
-    if (el._task) { try { el._task.cancel(); } catch (e) {} el._task = null; }
-    if (el.firstChild) { el.innerHTML = ""; }
-    el._rendered = false; el._rendering = false;
-  }
-
   function galOpen(url, title) {
     var modal = document.getElementById("gal-modal");
     var scroll = document.getElementById("gal-modal-scroll");
@@ -642,39 +618,35 @@
     modal.hidden = false;
     document.body.classList.add("gal-locked");
     var token = ++_renderToken;
+    var dpr = Math.min(window.devicePixelRatio || 1, 2);
 
     loadPdfjs()
       .then(function (pdfjs) { return pdfjs.getDocument(url).promise; })
       .then(function (doc) {
         if (token !== _renderToken) return;
-        var jobs = [];
-        for (var i = 1; i <= doc.numPages; i++) jobs.push(doc.getPage(i));
-        return Promise.all(jobs).then(function (pages) {
-          if (token !== _renderToken) return;
-          scroll.innerHTML = "";
-          var dpr = Math.min(window.devicePixelRatio || 1, 2);
-          var els = pages.map(function (page) {
-            var vp = page.getViewport({ scale: 1 });
-            var el = document.createElement("div");
-            el.className = "gal-page";
-            el.style.aspectRatio = vp.width + " / " + vp.height;
-            el._page = page;
-            scroll.appendChild(el);
-            return el;
+        scroll.innerHTML = "";
+        // renderiza as páginas em sequência (uma de cada vez, de cima pra baixo)
+        var chain = Promise.resolve();
+        var _loop = function (n) {
+          chain = chain.then(function () {
+            if (token !== _renderToken) return;
+            return doc.getPage(n).then(function (page) {
+              if (token !== _renderToken) return;
+              var canvas = document.createElement("canvas");
+              canvas.className = "gal-pdf-canvas";
+              scroll.appendChild(canvas);
+              // largura real exibida (limitada a 820 pelo CSS); o canvas define a altura
+              var cssW = canvas.clientWidth || Math.min(scroll.clientWidth, 820);
+              var vp1 = page.getViewport({ scale: 1 });
+              var vp = page.getViewport({ scale: (cssW * dpr) / vp1.width });
+              canvas.width = Math.round(vp.width);
+              canvas.height = Math.round(vp.height);
+              return page.render({ canvasContext: canvas.getContext("2d"), viewport: vp }).promise;
+            });
           });
-          if ("IntersectionObserver" in window) {
-            var io = new IntersectionObserver(function (entries) {
-              entries.forEach(function (e) {
-                if (e.isIntersecting) galRenderPage(e.target, dpr, token);
-                else galUnrenderPage(e.target);
-              });
-            }, { root: scroll, rootMargin: "160% 0px" });
-            els.forEach(function (el) { io.observe(el); });
-            scroll._io = io;
-          } else {
-            els.forEach(function (el) { galRenderPage(el, dpr, token); });
-          }
-        });
+        };
+        for (var i = 1; i <= doc.numPages; i++) _loop(i);
+        return chain;
       })
       .catch(function () {
         if (token !== _renderToken) return;
@@ -685,7 +657,6 @@
     var modal = document.getElementById("gal-modal");
     var scroll = document.getElementById("gal-modal-scroll");
     _renderToken++;
-    if (scroll._io) { try { scroll._io.disconnect(); } catch (e) {} scroll._io = null; }
     scroll.innerHTML = "";
     modal.hidden = true;
     document.body.classList.remove("gal-locked");
