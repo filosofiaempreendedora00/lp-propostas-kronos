@@ -599,6 +599,7 @@
   /* ---------- Galeria de propostas: carrossel + visualizador de PDF ---------- */
   var _pdfjs = null;
   var _renderToken = 0;
+  var _galHistoryActive = false;
   function loadPdfjs() {
     if (_pdfjs) return _pdfjs;
     var base = "https://cdn.jsdelivr.net/npm/pdfjs-dist@4.2.67/build/";
@@ -617,6 +618,10 @@
     scroll.scrollTop = 0;
     modal.hidden = false;
     document.body.classList.add("gal-locked");
+    // botão "voltar" do navegador/celular fecha o modal (em vez de sair da página)
+    if (!_galHistoryActive) {
+      try { history.pushState({ galModal: 1 }, ""); _galHistoryActive = true; } catch (e) { _galHistoryActive = false; }
+    }
     var token = ++_renderToken;
     var dpr = Math.min(window.devicePixelRatio || 1, 2);
 
@@ -653,6 +658,7 @@
         scroll.innerHTML = '<div class="gal-modal-status">Não consegui carregar a proposta agora. Tente novamente.</div>';
       });
   }
+  // fecha de fato (sem mexer no histórico)
   function galClose() {
     var modal = document.getElementById("gal-modal");
     var scroll = document.getElementById("gal-modal-scroll");
@@ -660,6 +666,14 @@
     scroll.innerHTML = "";
     modal.hidden = true;
     document.body.classList.remove("gal-locked");
+    _galHistoryActive = false;
+  }
+  // pedido de fechar (botão/X/Esc): dispara o "voltar"; o popstate fecha de fato
+  function galRequestClose() {
+    var modal = document.getElementById("gal-modal");
+    if (!modal || modal.hidden) return;
+    if (_galHistoryActive) { try { history.back(); return; } catch (e) {} }
+    galClose();
   }
 
   function initGallery() {
@@ -701,10 +715,13 @@
     var modal = document.getElementById("gal-modal");
     if (modal) {
       modal.querySelectorAll("[data-gal-close]").forEach(function (el) {
-        el.addEventListener("click", galClose);
+        el.addEventListener("click", galRequestClose);
       });
       document.addEventListener("keydown", function (e) {
-        if (e.key === "Escape" && !modal.hidden) galClose();
+        if (e.key === "Escape" && !modal.hidden) galRequestClose();
+      });
+      window.addEventListener("popstate", function () {
+        if (!modal.hidden) galClose();
       });
     }
   }

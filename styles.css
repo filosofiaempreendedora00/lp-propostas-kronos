@@ -2007,17 +2007,23 @@ body.gal-locked { overflow: hidden; }
 .gal-modal-title { font-family: var(--serif); font-style: italic; color: var(--areia); font-size: 1.05rem; }
 .gal-modal-close {
   flex: 0 0 auto;
-  width: 38px; height: 38px;
-  display: flex; align-items: center; justify-content: center;
-  border-radius: 50%;
-  background: transparent;
-  border: 1px solid var(--areia-20);
-  color: var(--areia);
+  display: inline-flex; align-items: center; justify-content: center;
+  gap: 0.4rem;
+  height: 42px;
+  padding: 0 0.95rem;
+  border-radius: 100px;
+  background: rgba(168, 144, 112, 0.16);
+  border: 1px solid var(--areia-45);
+  color: var(--creme);
+  font-family: var(--sans);
+  font-size: 0.82rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
   cursor: pointer;
   transition: background 0.25s var(--ease), color 0.25s var(--ease), border-color 0.25s var(--ease);
 }
-.gal-modal-close svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; }
-.gal-modal-close:hover { background: var(--sepia); color: var(--creme); border-color: var(--areia); }
+.gal-modal-close svg { width: 17px; height: 17px; fill: none; stroke: currentColor; stroke-width: 2.2; stroke-linecap: round; }
+.gal-modal-close:hover { background: var(--areia); color: var(--onix); border-color: var(--areia); }
 .gal-modal-scroll {
   flex: 1 1 auto;
   overflow-y: auto;
@@ -2039,3 +2045,22 @@ body.gal-locked { overflow: hidden; }
   box-shadow: 0 12px 30px -20px rgba(0, 0, 0, 0.55);
 }
 .gal-modal-status { color: var(--areia); font-size: 0.95rem; padding: 2.4rem 1rem; text-align: center; }
+
+/* no mobile o visualizador ocupa a tela toda e a barra (com "Fechar") fica fixa no topo */
+@media (max-width: 760px) {
+  .gal-modal { align-items: flex-start; }
+  .gal-modal-panel {
+    width: 100%;
+    height: 100%;
+    height: 100dvh;
+    max-height: 100dvh;
+    border-radius: 0;
+    border: 0;
+  }
+  .gal-modal-bar {
+    padding-top: max(0.7rem, env(safe-area-inset-top));
+    position: sticky;
+    top: 0;
+  }
+  .gal-modal-close { height: 44px; }
+}
