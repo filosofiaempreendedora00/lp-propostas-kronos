@@ -1286,6 +1286,7 @@ em { font-style: italic; }
   font-size: 0.82rem;
   color: var(--areia);
 }
+.plan-guarantee + .plan-guarantee { margin-top: 0.4rem; }
 .plan-featured .plan-guarantee { color: var(--sepia); }
 .pg-ic { width: 13px; height: 13px; flex: none; }
 .pg-ic path {
