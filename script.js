@@ -398,6 +398,24 @@
     window.addEventListener("scroll", onScroll, { passive: true });
   }
 
+  /* Menu mobile: abre/fecha o painel pelo hambúrguer */
+  function initNav() {
+    var header = document.querySelector(".site-header");
+    var toggle = document.querySelector(".nav-toggle");
+    var nav = document.querySelector(".site-nav");
+    if (!header || !toggle || !nav) return;
+    function close() {
+      header.classList.remove("nav-open");
+      toggle.setAttribute("aria-expanded", "false");
+    }
+    toggle.addEventListener("click", function () {
+      var open = header.classList.toggle("nav-open");
+      toggle.setAttribute("aria-expanded", open ? "true" : "false");
+    });
+    nav.querySelectorAll("a").forEach(function (a) { a.addEventListener("click", close); });
+    document.addEventListener("keydown", function (e) { if (e.key === "Escape") close(); });
+  }
+
   /* ---------- Checkout (Kiwify) — 1 link por plano e periodicidade ---------- */
   var CHECKOUT_URL = {
     individual: {
@@ -751,6 +769,7 @@
 
   function boot() {
     initHeader();
+    initNav();
     initReveal();
     initParallax();
     initCountUp();

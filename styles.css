@@ -275,6 +275,91 @@ em { font-style: italic; }
 .brand:hover .brand-logo { opacity: 0.82; }
 .brand-footer .brand-logo { height: 38px; }
 
+/* ---------- Navegação ---------- */
+.site-nav {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 1.9rem;
+}
+.nav-link {
+  font-family: var(--sans);
+  font-size: 0.95rem;
+  font-weight: 400;
+  letter-spacing: 0.01em;
+  color: var(--creme);
+  text-decoration: none;
+  opacity: 0.9;
+  transition: opacity 0.25s var(--ease), color 0.25s var(--ease);
+}
+.nav-link:hover { opacity: 1; color: var(--areia); }
+.nav-cta { margin-left: 0.3rem; }
+
+/* Botão hambúrguer — só no mobile */
+.nav-toggle {
+  display: none;
+  margin-left: auto;
+  width: 42px;
+  height: 42px;
+  padding: 0;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  background: transparent;
+  border: 1px solid var(--areia-20);
+  border-radius: 10px;
+  cursor: pointer;
+}
+.nav-toggle span {
+  display: block;
+  width: 20px;
+  height: 1.5px;
+  background: var(--creme);
+  transition: transform 0.3s var(--ease), opacity 0.3s var(--ease);
+}
+.site-header.nav-open .nav-toggle span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+.site-header.nav-open .nav-toggle span:nth-child(2) { opacity: 0; }
+.site-header.nav-open .nav-toggle span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+
+@media (max-width: 760px) {
+  .nav-toggle { display: flex; }
+  .site-nav {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+    margin-left: 0;
+    padding: 0.25rem clamp(1.25rem, 5vw, 2.75rem) 1.4rem;
+    background: rgba(21, 12, 6, 0.97);
+    backdrop-filter: saturate(140%) blur(14px);
+    -webkit-backdrop-filter: saturate(140%) blur(14px);
+    border-bottom: 1px solid var(--areia-14);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-8px);
+    transition: opacity 0.25s var(--ease), transform 0.25s var(--ease), visibility 0.25s;
+  }
+  .site-header.nav-open .site-nav {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+  }
+  .nav-link {
+    padding: 0.95rem 0.1rem;
+    font-size: 1.05rem;
+    border-bottom: 1px solid var(--areia-08);
+  }
+  .nav-cta {
+    margin: 1.1rem 0 0;
+    width: 100%;
+    justify-content: center;
+  }
+}
+
 /* ---------- Seção base ---------- */
 .section {
   position: relative;
