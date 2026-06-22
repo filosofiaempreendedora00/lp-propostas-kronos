@@ -433,20 +433,26 @@ em { font-style: italic; }
 /* Fundo quente "limpo": profundidade em gradiente + grão vetorial nítido.
    Alternativa à webp de areia, que com cover estica e fica grosseira em
    seções altas. Nítido em qualquer tela/DPR. */
-.bg-sand-onix {
+.bg-sand-onix,
+.tex-sand-onix {
   background-color: var(--onix);
   background-image:
     radial-gradient(135% 80% at 50% -10%, rgba(168, 144, 112, 0.13), transparent 58%),
     radial-gradient(120% 95% at 50% 110%, rgba(46, 32, 23, 0.45), transparent 56%);
+  background-size: auto;
 }
-.bg-sand-sepia {
+.bg-sand-sepia,
+.tex-sand-sepia {
   background-color: var(--sepia);
   background-image:
     radial-gradient(135% 82% at 50% -6%, rgba(168, 144, 112, 0.10), transparent 58%),
     radial-gradient(120% 95% at 50% 110%, rgba(21, 12, 6, 0.26), transparent 58%);
+  background-size: auto;
 }
 .bg-sand-onix::before,
-.bg-sand-sepia::before {
+.bg-sand-sepia::before,
+.tex-sand-onix::before,
+.tex-sand-sepia::before {
   content: "";
   position: absolute;
   inset: 0;
@@ -455,7 +461,7 @@ em { font-style: italic; }
   background-image: var(--grain);
   background-size: 180px 180px;
   mix-blend-mode: overlay;
-  opacity: 0.55;
+  opacity: 0.6;
 }
 /* No mobile, o JPG com cover amplia demais (areia grosseira). Troca por um
    grão vetorial (feTurbulence) — nítido em qualquer resolução/DPR. */
