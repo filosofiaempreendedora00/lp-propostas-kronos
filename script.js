@@ -466,6 +466,70 @@
     });
   }
 
+  /* Página de Planos (/planos): switcher mensal/anual.
+     Núcleo isolado da home (namespace .pp-*). Estado inicial = Anual. */
+  function initPlansPage() {
+    var root = document.querySelector("[data-pp-root]");
+    if (!root) return;
+    var toggle = root.querySelector(".pp-toggle");
+    var opts = root.querySelectorAll(".pp-opt");
+    var cards = root.querySelectorAll("[data-pp-card]");
+
+    function brl(n) { return n.toLocaleString("pt-BR"); }
+
+    function render(period) {
+      var annual = period === "annual";
+      if (toggle) toggle.classList.toggle("is-annual", annual);
+      opts.forEach(function (o) {
+        var on = o.getAttribute("data-period") === period;
+        o.classList.toggle("is-active", on);
+        o.setAttribute("aria-selected", on ? "true" : "false");
+      });
+      cards.forEach(function (card) {
+        var name = card.getAttribute("data-pp-name");
+        var mensal = parseInt(card.getAttribute("data-pp-monthly"), 10);
+        var anualMensal = parseInt(card.getAttribute("data-pp-annual-monthly"), 10);
+        var aVista = parseInt(card.getAttribute("data-pp-upfront"), 10);
+        var checkout = card.getAttribute(annual ? "data-pp-checkout-annual" : "data-pp-checkout-monthly");
+
+        // Preço grande
+        var amount = card.querySelector(".pp-amount");
+        if (amount) amount.textContent = annual ? anualMensal : mensal;
+
+        // Bloco abaixo do preço (calculado, não hardcoded)
+        var note = card.querySelector("[data-pp-note]");
+        if (note) {
+          if (annual) {
+            var anualizadoMensal = mensal * 12;
+            var economia = anualizadoMensal - aVista;
+            var desconto = Math.round((economia / anualizadoMensal) * 100);
+            note.innerHTML =
+              '<p class="pp-note-vista">Parcele em até 12× ou <strong>R$ ' + brl(aVista) +
+              ' à vista</strong> <span class="pp-off">' + desconto + '% OFF</span></p>' +
+              '<p class="pp-note-econ">Economize R$ ' + brl(economia) + ' no Plano Anual à vista</p>';
+          } else {
+            note.innerHTML = '<p class="pp-note-monthly">Cobrado mensalmente. Cancele quando quiser.</p>';
+          }
+        }
+
+        // Botão (texto + link de checkout)
+        var cta = card.querySelector(".pp-cta");
+        if (cta) {
+          cta.textContent = "Assinar " + name + " " + (annual ? "anual" : "mensal");
+          cta.setAttribute("href", checkout);
+          cta.setAttribute("target", "_blank");
+          cta.setAttribute("rel", "noopener noreferrer");
+        }
+      });
+    }
+
+    opts.forEach(function (o) {
+      o.addEventListener("click", function () { render(o.getAttribute("data-period")); });
+    });
+
+    render("annual"); // estado inicial = Anual
+  }
+
   function initFAQ() {
     var items = document.querySelectorAll(".faq-item");
     items.forEach(function (item) {
@@ -774,6 +838,7 @@
     initParallax();
     initCountUp();
     initBilling();
+    initPlansPage();
     initFAQ();
     initCheckout();
     initStepVideos();
