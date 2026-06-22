@@ -498,13 +498,12 @@ em { font-style: italic; }
   z-index: 1;
 }
 /* alinhado ao grid do site (mesma esquerda do logo), não centralizado */
-.hero-inner { position: relative; z-index: 3; text-align: center; }
+.hero-inner { position: relative; z-index: 3; }
 .hero .eyebrow { margin-bottom: 1.7rem; }
 
 .hero-headline {
   font-size: clamp(2.3rem, 5.4vw, 4.2rem);
   max-width: 22ch;
-  margin-inline: auto;
   letter-spacing: -0.01em;
   text-wrap: balance;
   text-shadow: 0 2px 40px rgba(21, 12, 6, 0.5);
@@ -513,7 +512,6 @@ em { font-style: italic; }
 
 .hero-sub {
   margin-top: 1.7rem;
-  margin-inline: auto;
   max-width: 44ch;
   font-size: clamp(1.02rem, 1.4vw, 1.18rem);
   color: var(--creme);
@@ -526,7 +524,7 @@ em { font-style: italic; }
   margin-top: 2.4rem;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-start;
   gap: 0.85rem;
 }
 .cta-trial-note {
@@ -1436,8 +1434,38 @@ em { font-style: italic; }
    Reaproveita .plan/.plan-* da home; namespace .pp-* p/ o que é
    dinâmico (sem colidir com o billing toggle da home).
    ============================================================ */
-.section-plans-page { padding-top: clamp(7rem, 12vw, 10rem); }
+/* Fundo das seções de /planos: profundidade em gradiente quente + grão
+   vetorial (nítido em qualquer tela). Substitui a webp de areia, que com
+   background cover estica e fica grosseira numa seção alta como esta. */
+.section-plans-page {
+  padding-top: clamp(7rem, 12vw, 10rem);
+  background-color: var(--onix);
+  background-image:
+    radial-gradient(135% 80% at 50% -10%, rgba(168, 144, 112, 0.13), transparent 58%),
+    radial-gradient(120% 95% at 50% 110%, rgba(46, 32, 23, 0.45), transparent 56%);
+}
+.pp-bg-sepia {
+  background-color: var(--sepia);
+  background-image:
+    radial-gradient(135% 82% at 50% -6%, rgba(168, 144, 112, 0.10), transparent 58%),
+    radial-gradient(120% 95% at 50% 110%, rgba(21, 12, 6, 0.26), transparent 58%);
+}
+.section-plans-page::before,
+.pp-bg-sepia::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-image: var(--grain);
+  background-size: 180px 180px;
+  mix-blend-mode: overlay;
+  opacity: 0.55;
+}
 .pp-head { text-align: center; }
+/* o .section-lead tem max-width sem margem auto — centraliza o bloco
+   dentro da head (senão o subtítulo "encosta" na esquerda em telas largas) */
+.pp-head .section-lead { margin-inline: auto; }
 
 /* Switcher (espelha o .billing-toggle da home) */
 .pp-toggle {
