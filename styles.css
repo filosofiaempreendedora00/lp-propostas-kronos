@@ -76,6 +76,13 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
   z-index: 2;
 }
 
+/* Âncoras (sitelinks/menu): rolagem suave + recuo pro header fixo não
+   cobrir o título da seção ao cair na âncora. Não altera layout. */
+@media (prefers-reduced-motion: no-preference) {
+  html { scroll-behavior: smooth; }
+}
+section[id] { scroll-margin-top: 84px; }
+
 /* ---------- Textura de areia reutilizável ---------- */
 .has-grain { position: relative; }
 .has-grain > .grain,
