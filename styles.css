@@ -1530,6 +1530,18 @@ em { font-style: italic; }
    dentro da head (senão o subtítulo "encosta" na esquerda em telas largas) */
 .pp-head .section-lead { margin-inline: auto; }
 
+/* Ancoragem por valor (frame de preço) — dourado, sutil, centralizado */
+.pp-anchor {
+  margin: 0.9rem auto 0;
+  max-width: 46ch;
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: clamp(1.05rem, 1.7vw, 1.3rem);
+  line-height: 1.25;
+  color: var(--areia);
+  text-align: center;
+}
+
 /* Switcher (espelha o .billing-toggle da home) */
 .pp-toggle {
   position: relative;

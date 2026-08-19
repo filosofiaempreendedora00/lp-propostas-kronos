@@ -419,12 +419,12 @@
   /* ---------- Checkout (Kiwify) — 1 link por plano e periodicidade ---------- */
   var CHECKOUT_URL = {
     individual: {
-      monthly: "https://pay.kiwify.com.br/HZzahV5",
+      monthly: "https://pay.kiwify.com.br/uuZ8y2I",
       annual:  "https://pay.kiwify.com.br/vaYLMVx"
     },
     time: {
-      monthly: "https://pay.kiwify.com.br/Fa0RNiT",
-      annual:  "https://pay.kiwify.com.br/3gsFJ9E"
+      monthly: "https://pay.kiwify.com.br/mtHrzfO",
+      annual:  "https://pay.kiwify.com.br/ePbRkPy"
     }
   };
   var billingMode = "monthly";
