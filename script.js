@@ -488,7 +488,8 @@
       cards.forEach(function (card) {
         var name = card.getAttribute("data-pp-name");
         var mensal = parseInt(card.getAttribute("data-pp-monthly"), 10);
-        var anualMensal = parseInt(card.getAttribute("data-pp-annual-monthly"), 10);
+        // string (pode ter centavos "30,72" — parcela com juros da Kiwify)
+        var anualMensal = card.getAttribute("data-pp-annual-monthly");
         var aVista = parseInt(card.getAttribute("data-pp-upfront"), 10);
         var checkout = card.getAttribute(annual ? "data-pp-checkout-annual" : "data-pp-checkout-monthly");
 
