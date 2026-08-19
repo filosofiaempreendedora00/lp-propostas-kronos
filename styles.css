@@ -1591,6 +1591,9 @@ em { font-style: italic; }
   border-color: var(--areia-30);
   box-shadow: var(--shadow-glow), var(--shadow-card);
 }
+/* selo "Mais popular" aparece só no modo Anual (some no Mensal) */
+.pp-card .plan-badge { display: none; }
+.pp-toggle.is-annual ~ .plans-grid .plan-badge { display: block; }
 
 /* Bloco "à vista vs mensal" abaixo do preço */
 .pp-note { margin-top: 0.85rem; min-height: 2.7em; }
