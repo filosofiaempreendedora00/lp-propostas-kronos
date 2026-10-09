@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>KRONOS · Ferramentas</title>
+  <meta name="robots" content="noindex" />
+  <meta name="description" content="Seu arsenal de vendas, em um lugar só." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Instrument+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    :root{
+      --onix:#150C06; --sepia:#2E2017; --sepia-soft:#261A12;
+      --areia:#A89070; --creme:#F5EFE6; --dourado:#E0BB6A;
+      --serif:"Cormorant Garamond",Georgia,serif;
+      --sans:"Instrument Sans",system-ui,-apple-system,Segoe UI,Roboto,sans-serif;
+    }
+    *{box-sizing:border-box;margin:0;padding:0}
+    html,body{height:100%}
+    body{
+      font-family:var(--sans); color:var(--creme);
+      background:radial-gradient(120% 80% at 50% -10%, #2a1b10 0%, var(--onix) 55%), var(--onix);
+      min-height:100%; display:flex; justify-content:center;
+      padding:48px 20px calc(40px + env(safe-area-inset-bottom));
+      -webkit-font-smoothing:antialiased;
+    }
+    .wrap{width:100%; max-width:460px; display:flex; flex-direction:column; gap:26px;}
+    header{text-align:center;}
+    .brand{font-family:var(--serif); font-weight:600; font-size:22px; letter-spacing:.32em;
+      color:var(--creme); text-transform:uppercase; margin-bottom:22px;}
+    .brand span{color:var(--dourado)}
+    h1.title{font-family:var(--serif); font-weight:500; font-size:34px; line-height:1.08;}
+    p.sub{color:var(--areia); font-size:14px; line-height:1.55; margin-top:10px; font-weight:300;}
+    nav{display:flex; flex-direction:column; gap:12px;}
+    .link{display:flex; align-items:center; gap:14px;
+      background:var(--sepia); border:1px solid rgba(168,144,112,.22);
+      border-radius:14px; padding:16px 18px; text-decoration:none; color:var(--creme);
+      transition:border-color .18s, background .18s, transform .08s;}
+    a.link:hover{border-color:var(--dourado); background:#33261b;}
+    a.link:active{transform:scale(.99);}
+    .link.is-soon{opacity:.52; cursor:default;}
+    .ico{flex:0 0 auto; width:42px; height:42px; border-radius:11px;
+      background:var(--sepia-soft); border:1px solid rgba(168,144,112,.18);
+      display:grid; place-items:center; font-size:20px;}
+    .txt{flex:1 1 auto; min-width:0;}
+    .lbl{display:block; font-size:15.5px; font-weight:500; line-height:1.25;}
+    .dsc{display:block; font-size:12.5px; color:var(--areia); margin-top:3px; font-weight:300;
+      overflow:hidden; text-overflow:ellipsis; white-space:nowrap;}
+    .arw{flex:0 0 auto; color:var(--areia); font-size:18px; transition:color .18s, transform .18s;}
+    a.link:hover .arw{color:var(--dourado); transform:translateX(3px);}
+    .soon-tag{flex:0 0 auto; font-size:10px; color:var(--areia); border:1px solid rgba(168,144,112,.3);
+      border-radius:999px; padding:3px 9px; letter-spacing:.05em; text-transform:uppercase;}
+    footer{text-align:center; color:var(--areia); opacity:.65; font-size:11.5px; margin-top:6px; font-weight:300;}
+    footer a{color:var(--areia); text-decoration:none; border-bottom:1px solid rgba(168,144,112,.35);}
+    @media(max-width:380px){ h1.title{font-size:29px} .link{padding:14px 15px} }
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <header>
+      <div class="brand">KRON<span>O</span>S</div>
+      <h1 class="title">Ferramentas</h1>
+      <p class="sub">Seu arsenal de vendas, em um lugar só.</p>
+    </header>
+    <nav id="links"></nav>
+    <footer>© KRONOS · <a href="https://kronos-ias.com.br">kronos-ias.com.br</a></footer>
+  </main>
+
+  <script>
+    /* ===== EDITE SÓ AQUI. soon:true = aparece como "em breve" (sem link) ===== */
+    const LINKS = [
+      { ico:"🐙", lbl:"Octopus",          url:"https://octopus.turbopartners.com.br/" },
+      { ico:"🧠", lbl:"Synapse",          url:"https://synapse.turbopartners.com.br/login" },
+      { ico:"🎯", lbl:"Vendedor 5.0",     soon:true },
+      { ico:"🎬", lbl:"Editor de vídeos", soon:true },
+    ];
+    /* ======================================================================= */
+    document.getElementById("links").innerHTML = LINKS.map(function(l){
+      var inner = '<span class="ico">'+l.ico+'</span><span class="txt"><span class="lbl">'+l.lbl+'</span>'
+        + (l.dsc ? '<span class="dsc">'+l.dsc+'</span>' : '') + '</span>';
+      if(l.soon){ return '<div class="link is-soon">'+inner+'<span class="soon-tag">em breve</span></div>'; }
+      var ext = /^https?:/.test(l.url);
+      return '<a class="link" href="'+l.url+'"'+(ext?' target="_blank" rel="noopener"':'')+'>'+inner+'<span class="arw">›</span></a>';
+    }).join("");
+  </script>
+</body>
+</html>
